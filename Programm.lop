@@ -1,0 +1,38 @@
+scope scope1
+{
+    type asdf
+    {
+        byte4 a;
+        byte8 b = 345;
+    }
+
+    function lol
+    {
+        if ((a))
+            {
+                b -> asdf;
+                a = ~((((b)+4)/2) - 16)**(1+a);
+            }
+            else
+            {
+                b = a;
+            }
+        return 1325 + asdf;
+    }
+    #asdfasdf qg()ADf as g df agsd
+    byte8 a; #asldkfnalsdf
+    byte8 b = a + a;
+    string str = 'sdgf325-gst5___';
+    for (byte flag = true; byte4 i = 0;; i <= 16 -> 0+(+(~4)) / 3; i+ ++i)
+    {
+        const_array <byte4, 17542324562345 + asdf + 'goer'> temp_temp;
+        b += 2;
+    }
+    a =  5;
+    delete b;
+    jump asdfasdf::sdfaasdf;
+}
+scope scope2
+{
+    lopout((b+23456), afdgag, 526254, asdf + 'sdgf');
+}
