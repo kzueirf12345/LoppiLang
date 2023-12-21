@@ -19,7 +19,7 @@ Lexer::Lexer(const std::string& filename) : lexem_ind(0), line_num(1)
     {
         std::stringstream ss(grammar_word_str);
         std::string word;
-        uint64_t num;
+        long long num;
         ss >> word;
         ss >> num;
         for (const char chr : word)
@@ -106,7 +106,7 @@ void Lexer::Lexing(const std::string& programm_filename)
     std::cerr << "Lexer is OK" << std::endl;
 }
 
-uint64_t Lexer::Type(const std::string &lexem)
+long long Lexer::Type(const std::string &lexem)
 {
     if (tree.count(lexem))
         return tree.get_type(lexem);
@@ -126,7 +126,7 @@ uint64_t Lexer::Type(const std::string &lexem)
 
 void Lexer::PushLexem(const std::string &lexem, bool flag)
 {
-    uint64_t type = Type(lexem);
+    long long type = Type(lexem);
     if (type == -1)
     {
         std::cerr << "Lexem - '" << lexem << "' is incorrect on " << line_num << " line" << std::endl;

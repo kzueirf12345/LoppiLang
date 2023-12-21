@@ -13,11 +13,11 @@ class Lexer
 {
 public:
     Lexer(const std::string &filename);
-    uint64_t lexem_ind;
-    uint64_t line_num;
+    long long lexem_ind;
+    long long line_num;
 
     void Lexing(const std::string &programm_filename);
-    uint64_t Type(const std::string &lexem);
+    long long Type(const std::string &lexem);
     void PushLexem(const std::string &lexem, bool flag = false);
 
     Lexem gc();
