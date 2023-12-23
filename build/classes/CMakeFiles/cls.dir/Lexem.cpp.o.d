@@ -1,6 +1,6 @@
 classes/CMakeFiles/cls.dir/Lexem.cpp.o: \
-  /home/urodish/Инфа/Loppi/classes/Lexem.cpp \
-  /home/urodish/Инфа/Loppi/classes/headers/Lexem.h \
+  /home/urodish/programming/инфа/Loppi/classes/Lexem.cpp \
+  /home/urodish/programming/инфа/Loppi/classes/headers/Lexem.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/string \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/requires_hosted.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/x86_64-linux-gnu/c++/13/bits/c++config.h \

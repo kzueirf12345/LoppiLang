@@ -7,11 +7,11 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "/home/urodish/Инфа/Loppi/CMakeLists.txt"
+  "/home/urodish/programming/инфа/Loppi/CMakeLists.txt"
   "CMakeFiles/3.27.4/CMakeCCompiler.cmake"
   "CMakeFiles/3.27.4/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.27.4/CMakeSystem.cmake"
-  "/home/urodish/Инфа/Loppi/classes/CMakeLists.txt"
+  "/home/urodish/programming/инфа/Loppi/classes/CMakeLists.txt"
   "/usr/share/cmake-3.27/Modules/CMakeCCompiler.cmake.in"
   "/usr/share/cmake-3.27/Modules/CMakeCCompilerABI.c"
   "/usr/share/cmake-3.27/Modules/CMakeCInformation.cmake"
@@ -40,6 +40,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.27/Modules/CMakeTestCCompiler.cmake"
   "/usr/share/cmake-3.27/Modules/CMakeTestCXXCompiler.cmake"
   "/usr/share/cmake-3.27/Modules/CMakeTestCompilerCommon.cmake"
+  "/usr/share/cmake-3.27/Modules/CMakeUnixFindMake.cmake"
   "/usr/share/cmake-3.27/Modules/Compiler/ADSP-DetermineCompiler.cmake"
   "/usr/share/cmake-3.27/Modules/Compiler/ARMCC-DetermineCompiler.cmake"
   "/usr/share/cmake-3.27/Modules/Compiler/ARMClang-DetermineCompiler.cmake"

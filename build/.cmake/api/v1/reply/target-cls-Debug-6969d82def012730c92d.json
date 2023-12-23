@@ -32,7 +32,7 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 6,
+				"line" : 12,
 				"parent" : 0
 			}
 		]
@@ -50,7 +50,7 @@
 			[
 				{
 					"backtrace" : 2,
-					"path" : "/home/urodish/\u0418\u043d\u0444\u0430/Loppi/classes/headers"
+					"path" : "/home/urodish/programming/\u0438\u043d\u0444\u0430/Loppi/classes/headers"
 				}
 			],
 			"language" : "CXX",
@@ -59,7 +59,10 @@
 				0,
 				1,
 				2,
-				3
+				3,
+				4,
+				5,
+				6
 			]
 		}
 	],
@@ -80,7 +83,10 @@
 				0,
 				1,
 				2,
-				3
+				3,
+				4,
+				5,
+				6
 			]
 		}
 	],
@@ -108,6 +114,24 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "classes/Syntaxer.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "classes/TID.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "classes/TIDTree.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "classes/TypeOpStack.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],

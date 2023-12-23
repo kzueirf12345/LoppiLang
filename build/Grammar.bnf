@@ -1,0 +1,135 @@
+<Programm> ::= <Scope> <Subprogramm>
+<Subprogramm> ::= <Scope> <Subprogramm> | E
+<Scope> ::= "scope" ( <Name> )? "{" <Statements> "}"
+
+<Name> ::= <Name_start> <Name_body>
+<Name_start> ::= [a-z] | "_"
+<Name_body> ::= <Symbol> <Name_body> | E
+<Names> ::= <Name> <Other_names>
+<Other_names> ::= "," <Name> <Other_names> | E
+<Symbol> ::= [a-z] | "_" | [0-9]
+
+<Statements> ::= <Statement> <Other_statements>
+<Other_statements> ::= <Statement> <Other_statements> | E
+<Statement> ::= <Function> | <Complicated_operator> | <Complicated_type> | <Var> | <Jump>
+
+<Function> ::= "function" <Name> (":" <Type>)? ("(" <Var_enum> ")")? "{" <Func_statements> "}"
+
+<Complicated_operator> ::= <If> | <While> | <For> | <Lopin> | <Lopout> | <Delete> | <Call_func> ";"
+
+<Complicated_type> ::= "type" <Name> "{" <Vars> "}"
+
+<Var> ::= <Type> <Name> ( "=" <Expr> )? ";"
+<Vars> ::= <Var> <Other_vars>
+<Other_vars> ::= <Vars> <Other_vars> | E
+<Var_enum> ::= <Type> <Name> <Other_var_enum>
+<Other_var_enum> ::= "," <Var_enum> | E
+
+<Type> ::= <Const_type> | <Mutable_type>
+<Const_type> ::= "const_" <Mutable_type>
+<Mutable_type> ::= <Num_type> | "string" | "array <" <Type> "," <Expr> ">" | <Call_name>
+<Num_type> ::= "byte" | "byte2" | "byte4" | "byte8" | "bool"
+
+
+<Func_statements> ::= <Func_statement> <Other_func_statements>
+<Other_func_statements> ::= <Func_statement> <Other_func_statements> | E
+<Func_statement> ::= <Complicated_operator> | <Var> | <Return> | <Complicated_type>
+
+<Body_statements> ::= <Body_statement> <Body_statements> | E
+<Body_statement> ::= <Complicated_operator> | <Complicated_type> | <Var> | <Jump_operator> | <Return>
+
+
+<If> ::= "if" "(" <Expr> ")" "{" <Body_statements> "}" ( <Else_if> )?
+<Else> ::= "else" "{" <Body_statements> "}"
+<Else_if> ::= "else" ("{" <Body_statements> "}" | <If>)
+
+<While> ::= "while" "(" <Expr> ")" "{" <Body_statements> "}" ( <Else> )? 
+
+<For> ::= "for" "(" <Vars> ";" <Expr> ";" <Expr> ")" "{" <Body_statements> "}" ( <Else> )?
+
+<Jump_operator> ::= <Break> | <Continue>
+<Break> ::= "break" ";"
+<Continue> ::= "continue" ";"
+<Jump> ::= "jump" <Call_name> ";"
+
+<Lopin> ::= "lopin" "(" <Names> ")" ";"
+<Lopout> ::= "lopout" "(" <Exprs> ")" ";"
+
+<Delete> ::= "delete" <Call_name> ";"
+
+
+<Expr> ::= <Assignment_expr> <Other_expr>
+<Other_expr> ::= "," <Assignment_expr> <Other_expr> | E
+
+<Exprs> ::= <Assignment_expr> <Other_exprs>
+<Other_exprs> ::= "," <Assignment_expr> <Other_exprs> | E
+
+<Assignment_expr> ::= <Logical_implication> <Other_assignment_expr>
+<Other_assignment_expr> ::= <Assignment_operator> <Assignment_expr> <Other_assignment_expr> | E
+<Assignment_operator> ::= "=" | "+=" | "->=" | "-=" | "*=" | "**=" | "/=" | "^=" | "&=" | "|=" | "%="
+
+<Logical_implication> ::= <Logical_or> <Other_logical_implication>
+<Other_logical_implication> ::= "->" <Logical_or> <Other_logical_implication> | E
+
+<Logical_or> ::= <Logical_and> <Other_logical_or>
+<Other_logical_or> ::= "||" <Logical_and> | E
+
+<Logical_and> ::= <Bitwise_or> <Other_logical_and>
+<Other_logical_and> ::= "&&" <Bitwise_or> <Other_logical_and> | E
+
+<Bitwise_or> ::= <Bitwise_xor> <Other_bitwise_or>
+<Other_bitwise_or> ::= "|" <Bitwise_xor> <Other_bitwise_or> | E
+
+<Bitwise_xor> ::= <Bitwise_and> <Other_bitwise_xor>
+<Other_bitwise_xor> ::= "^" <Bitwise_and> <Other_bitwise_xor> | E
+
+<Bitwise_and> ::= <Comparison_equality> <Other_bitwise_and>
+<Other_bitwise_and> ::= "&" <Comparison_equality> <Other_bitwise_and> | E
+
+<Comparison_equality> ::= <Comparison_comparison> <Other_comparison_equality>
+<Other_comparison_equality> ::= <Comprarison_equality_operator> <Comparison_comparison> <Other_comparison_equality> | E
+<Comprarison_equality_operator> ::= "==" | "!="
+
+<Comparison_comparison> ::= <Sumsub> <Other_comparison_comparison>
+<Other_comparison_comparison> ::= <Comparison_comparison_operator> <Sumsub> <Other_comparison_comparison> | E
+<Comparison_comparison_operator> ::= ">" | ">=" | "<" | "<="
+
+<Sumsub> ::= <Muldiv> <Other_sumsub>
+<Other_sumsub> ::= <Sumsub_operator> <Muldiv> <Other_sumsub> | E
+<Sumsub_operator> ::= "+" | "-"
+
+<Muldiv> ::= <Power> <Other_muldiv>
+<Other_muldiv> ::= <Muldiv_operator> <Power> <Other_muldiv> | E
+<Muldiv_operator> ::= "/" | "*" | "%"
+
+<Power> ::= <Unary> <Other_power>
+<Other_power> ::= "**" <Power> <Other_power> | E
+
+<Unary> ::= <Unary_operator> <Unary> | <Call_expr> 
+<Unary_operator> ::= "++" | "--" | "+" | "-" | "!" | "~"
+
+<Call_expr> ::= <GenSec> <Other_call_expr>
+<Other_call_expr> ::= <Call_operator> <Other_call_expr> | E
+<Call_operator> ::= "[" <Expr> "]"
+
+<GenSec> ::= <Num_literal> | <String_literal> | <Call_name_with_field> | <Init_list> | <Call_func> | <Logic_literal>
+
+<Num_literal> ::= [0-9] | [1-9] <Num_literal>
+<String_literal> ::= "'" <String_content> "'"
+<String_content> ::= <String_symbol> <String_content> | E
+<String_symbol> ::= <Symbol> | " " | "\n" | "\t"
+<Logic_literal> ::= "true" | "false"
+
+<Init_list> ::= "{" <Init_list_content> "}"
+<Init_list_content> ::= <Expr> <Other_init_list_content>
+<Other_init_list_content> ::= "," <Expr> <Other_init_list_content> | E
+
+
+<Call_name_with_field> ::= <Call_name> (<Call_field>)?
+<Call_name> ::= <Name> <Other_call_name>
+<Other_call_name> ::= "::" <Name> <Other_call_name> | E
+<Call_field> ::= "." <Name> <Call_field>
+
+<Call_func> ::= <Call_name> "(" <Exprs> ")"
+
+<Return> ::= "return" (<Expr>)? ";"

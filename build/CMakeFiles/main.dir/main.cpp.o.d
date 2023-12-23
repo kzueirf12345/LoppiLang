@@ -1,6 +1,7 @@
-CMakeFiles/main.dir/main.cpp.o: /home/urodish/Инфа/Loppi/main.cpp \
-  /home/urodish/Инфа/Loppi/classes/headers/Syntaxer.h \
-  /home/urodish/Инфа/Loppi/classes/headers/Lexer.h \
+CMakeFiles/main.dir/main.cpp.o: \
+  /home/urodish/programming/инфа/Loppi/main.cpp \
+  /home/urodish/programming/инфа/Loppi/classes/headers/Syntaxer.h \
+  /home/urodish/programming/инфа/Loppi/classes/headers/Lexer.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/unordered_map \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/requires_hosted.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/x86_64-linux-gnu/c++/13/bits/c++config.h \
@@ -201,7 +202,7 @@ CMakeFiles/main.dir/main.cpp.o: /home/urodish/Инфа/Loppi/main.cpp \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/stl_tempbuf.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/pstl/glue_algorithm_defs.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/pstl/execution_defs.h \
-  /home/urodish/Инфа/Loppi/classes/headers/AVLTree.h \
+  /home/urodish/programming/инфа/Loppi/classes/headers/AVLTree.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/queue \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/deque \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/stl_uninitialized.h \
@@ -212,4 +213,14 @@ CMakeFiles/main.dir/main.cpp.o: /home/urodish/Инфа/Loppi/main.cpp \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/stl_bvector.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/vector.tcc \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/stl_queue.h \
-  /home/urodish/Инфа/Loppi/classes/headers/Lexem.h
+  /home/urodish/programming/инфа/Loppi/classes/headers/Lexem.h \
+  /home/urodish/programming/инфа/Loppi/classes/headers/TIDTree.h \
+  /home/urodish/programming/инфа/Loppi/classes/headers/TID.h \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/map \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/stl_tree.h \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/stl_map.h \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/stl_multimap.h \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/set \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/stl_set.h \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/stl_multiset.h \
+  /home/urodish/programming/инфа/Loppi/classes/headers/TypeOpStack.h

@@ -1,4 +1,4 @@
-# Install script for directory: /home/urodish/Инфа/Loppi/classes
+# Install script for directory: /home/urodish/programming/инфа/Loppi/classes
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

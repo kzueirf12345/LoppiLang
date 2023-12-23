@@ -1,4 +1,3 @@
-
 #include "Syntaxer.h"
 
 #define DEBUG true

@@ -1,6 +1,6 @@
 classes/CMakeFiles/cls.dir/AVLTree.cpp.o: \
-  /home/urodish/Инфа/Loppi/classes/AVLTree.cpp \
-  /home/urodish/Инфа/Loppi/classes/headers/AVLTree.h \
+  /home/urodish/programming/инфа/Loppi/classes/AVLTree.cpp \
+  /home/urodish/programming/инфа/Loppi/classes/headers/AVLTree.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/queue \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/requires_hosted.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/x86_64-linux-gnu/c++/13/bits/c++config.h \

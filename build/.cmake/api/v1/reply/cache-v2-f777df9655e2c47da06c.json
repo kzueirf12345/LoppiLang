@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/urodish/\u0418\u043d\u0444\u0430/Loppi/build"
+			"value" : "/home/urodish/programming/\u0438\u043d\u0444\u0430/Loppi/build"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -175,7 +175,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/llvm-ar-15"
+			"value" : "/usr/bin/llvm-ar-16"
 		},
 		{
 			"name" : "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS",
@@ -207,7 +207,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/llvm-ranlib-15"
+			"value" : "/usr/bin/llvm-ranlib-16"
 		},
 		{
 			"name" : "CMAKE_CXX_FLAGS",
@@ -319,7 +319,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/llvm-ar-15"
+			"value" : "/usr/bin/llvm-ar-16"
 		},
 		{
 			"name" : "CMAKE_C_COMPILER_CLANG_SCAN_DEPS",
@@ -351,7 +351,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/llvm-ranlib-15"
+			"value" : "/usr/bin/llvm-ranlib-16"
 		},
 		{
 			"name" : "CMAKE_C_FLAGS",
@@ -575,7 +575,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/urodish/\u0418\u043d\u0444\u0430/Loppi/build/CMakeFiles/pkgRedirects"
+			"value" : "/home/urodish/programming/\u0438\u043d\u0444\u0430/Loppi/build/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -635,7 +635,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/urodish/\u0418\u043d\u0444\u0430/Loppi"
+			"value" : "/home/urodish/programming/\u0438\u043d\u0444\u0430/Loppi"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -1247,7 +1247,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/urodish/\u0418\u043d\u0444\u0430/Loppi/build"
+			"value" : "/home/urodish/programming/\u0438\u043d\u0444\u0430/Loppi/build"
 		},
 		{
 			"name" : "Loppi_IS_TOP_LEVEL",
@@ -1271,7 +1271,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/urodish/\u0418\u043d\u0444\u0430/Loppi"
+			"value" : "/home/urodish/programming/\u0438\u043d\u0444\u0430/Loppi"
 		},
 		{
 			"name" : "_CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED",

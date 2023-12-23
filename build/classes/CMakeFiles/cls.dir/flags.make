@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/clang++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/urodish/Инфа/Loppi/classes/headers
+CXX_INCLUDES = -I/home/urodish/programming/инфа/Loppi/classes/headers
 
 CXX_FLAGS = -g
 

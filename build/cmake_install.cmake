@@ -1,4 +1,4 @@
-# Install script for directory: /home/urodish/Инфа/Loppi
+# Install script for directory: /home/urodish/programming/инфа/Loppi
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,7 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/urodish/Инфа/Loppi/build/classes/cmake_install.cmake")
+  include("/home/urodish/programming/инфа/Loppi/build/classes/cmake_install.cmake")
 
 endif()
 
@@ -56,5 +56,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/urodish/Инфа/Loppi/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/urodish/programming/инфа/Loppi/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

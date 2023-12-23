@@ -21,6 +21,11 @@
 		{
 			"isCMake" : true,
 			"isExternal" : true,
+			"path" : "/usr/share/cmake-3.27/Modules/CMakeUnixFindMake.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
 			"path" : "/usr/share/cmake-3.27/Modules/CMakeSystemSpecificInitialize.cmake"
 		},
 		{
@@ -766,8 +771,8 @@
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "/home/urodish/\u0418\u043d\u0444\u0430/Loppi/build",
-		"source" : "/home/urodish/\u0418\u043d\u0444\u0430/Loppi"
+		"build" : "/home/urodish/programming/\u0438\u043d\u0444\u0430/Loppi/build",
+		"source" : "/home/urodish/programming/\u0438\u043d\u0444\u0430/Loppi"
 	},
 	"version" : 
 	{

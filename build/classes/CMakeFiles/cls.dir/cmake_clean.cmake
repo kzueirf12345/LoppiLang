@@ -7,6 +7,12 @@ file(REMOVE_RECURSE
   "CMakeFiles/cls.dir/Lexer.cpp.o.d"
   "CMakeFiles/cls.dir/Syntaxer.cpp.o"
   "CMakeFiles/cls.dir/Syntaxer.cpp.o.d"
+  "CMakeFiles/cls.dir/TID.cpp.o"
+  "CMakeFiles/cls.dir/TID.cpp.o.d"
+  "CMakeFiles/cls.dir/TIDTree.cpp.o"
+  "CMakeFiles/cls.dir/TIDTree.cpp.o.d"
+  "CMakeFiles/cls.dir/TypeOpStack.cpp.o"
+  "CMakeFiles/cls.dir/TypeOpStack.cpp.o.d"
   "libcls.a"
   "libcls.pdb"
 )
