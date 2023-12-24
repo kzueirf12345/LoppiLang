@@ -27,9 +27,6 @@ std::string TypeOpStack::max_byte(const std::string& l,
 
 std::string TypeOpStack::check_bin(std::string s1, std::string s2,
                                    std::string op) const {
-    if (_assign_ops.count(op)) {
-        return check_assignment(s1, s2, op);
-    }
 
     s1 = const_parser(s1);
     s2 = const_parser(s2);
@@ -48,14 +45,13 @@ std::string TypeOpStack::check_bin(std::string s1, std::string s2,
             return "byte";
     } else if (s1 == s2 && s1 == "array") {
         if (op == "==" || op == "!=") return "byte";
-    } else if (s1 != s2) {
-        if (_comp_ops.count(op) || _logic_bin_ops.count(op))
+    } else
+    {    if (_comp_ops.count(op) || _logic_bin_ops.count(op))
             return "byte";
         else if (_bin_ops.count(op))
             return max_byte(s1, s2);
-    } else {
-        throw std::logic_error(s1 + " " + op + " " + s2);
     }
+        throw std::logic_error(s1 + " " + op + " " + s2);
 }
 
 std::string TypeOpStack::check_uno(std::string s, std::string op) const {
@@ -91,9 +87,10 @@ std::string TypeOpStack::check_assignment(std::string s1, std::string s2,
         throw std::logic_error(s1 + " " + op + " " + s2);
 
     if (s1 == s2 && s1 == "string") {
-        if (op == "+=" && op == "=") return "string";
+        if (op == "+=" || op == "=") return "string";
     } else {
-        if (_assign_ops.count(op) && max_byte(s1, s2) == s1) return s1;
+        if (_assign_ops.count(op))
+            return max_byte(s1, s2);
     }
     throw std::logic_error(s1 + " " + op + " " + s2);
 }

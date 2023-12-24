@@ -306,7 +306,8 @@ void TIDTree::push_func(std::string name, std::string return_type,
         throw std::logic_error("you can create funnctions directly in scopes");
     }
 
-    get_type_fields(return_type);
+    if (return_type != "void")
+        get_type_fields(return_type);
 
     for (auto& [var, var_type] : params) {
         get_type_fields(var_type);

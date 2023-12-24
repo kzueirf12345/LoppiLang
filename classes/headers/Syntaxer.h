@@ -36,6 +36,7 @@ class Syntaxer {
                 " on " + std::to_string(lexem.line) + " line";
         }
         get();
+        type_stack.clear();
         Statements();
         get();
         if (lexem.name != "}") {
@@ -172,21 +173,31 @@ class Syntaxer {
                 " on " + std::to_string(lexem.line) + " line";
         }
         std::string name = lexem.name;  // sem
+        // lexer->tree.insert(name, 8);
         get();
         if (lexem.name != "{") {
             throw lexem.name + " number " + std::to_string(lexer->lexem_ind) +
                 " on " + std::to_string(lexem.line) + " line";
         }
-        std::map<std::string, std::string> fields;  // sem
-        // TODO: записывается ли в дерево типов
+        std::vector<std::pair<std::string, std::string>> fields;  // sem
         get();
         Vars(fields);
+        std::map<std::string, std::string> fields_map;
+        for (const auto& elem : fields)
+        {
+            fields_map[elem.first] = elem.second;
+        }
+        if (fields.size() != fields_map.size())
+        {
+            throw lexem.name + " number " + std::to_string(lexer->lexem_ind) +
+                " on " + std::to_string(lexem.line) + " line";
+        }
         get();
         if (lexem.name != "}") {
             throw lexem.name + " number " + std::to_string(lexer->lexem_ind) +
                 " on " + std::to_string(lexem.line) + " line";
         }
-        tid_tree.push_type(name, fields);  // sem
+        tid_tree.push_type(name, fields_map);  // sem
     }
 
     std::pair<std::string, std::string> Var() {  // sem
@@ -206,9 +217,34 @@ class Syntaxer {
             type_stack.push(type);  // sem
             type_stack.push("=");   // sem
             Expr();
-            // TODO почему не check_assigment
-            type_stack.check_bin();  // sem
-            type_stack.clear();      // sem
+            type_stack.check_assignment();  // sem
+            type_stack.clear();             // sem
+            get();
+        }
+        if (lexem.name != ";") {
+            throw lexem.name + " number " + std::to_string(lexer->lexem_ind) +
+                " on " + std::to_string(lexem.line) + " line";
+        }
+        return {name, type};
+    }
+
+    std::pair<std::string, std::string> Var_without_sem() {  // sem
+        Type();
+        std::string type = lexem.name;  // sem
+        get();
+        if (lexem.type != 2) {
+            throw lexem.name + " number " + std::to_string(lexer->lexem_ind) +
+                " on " + std::to_string(lexem.line) + " line";
+        }
+        std::string name = lexem.name;  // sem
+        get();
+        if (lexem.name == "=") {
+            get();
+            type_stack.push(type);  // sem
+            type_stack.push("=");   // sem
+            Expr();
+            type_stack.check_assignment();  // sem
+            type_stack.clear();             // sem
             get();
         }
         if (lexem.name != ";") {
@@ -255,6 +291,7 @@ class Syntaxer {
     }
 
     void If() {
+        tid_tree.create_tid(NodeType::BODY);  // sem
         if (lexem.name != "if") {
             throw lexem.name + " number " + std::to_string(lexer->lexem_ind) +
                 " on " + std::to_string(lexem.line) + " line";
@@ -286,9 +323,11 @@ class Syntaxer {
                 " on " + std::to_string(lexem.line) + " line";
         }
         get();
+        tid_tree.leave_tid();
         if (lexem.name == "else") {
             get();
             if (lexem.name == "{") {
+                tid_tree.create_tid(NodeType::BODY);
                 get();
                 Body_statements();
                 get();
@@ -297,6 +336,7 @@ class Syntaxer {
                         std::to_string(lexer->lexem_ind) + " on " +
                         std::to_string(lexem.line) + " line";
                 }
+                tid_tree.leave_tid();
             } else if (lexem.name == "if") {
                 If();
             } else {
@@ -309,7 +349,8 @@ class Syntaxer {
         }
     }
 
-    void While() {  // sem
+    void While() {                            // sem
+        tid_tree.create_tid(NodeType::BODY);  // sem
         if (lexem.name != "while") {
             throw lexem.name + " number " + std::to_string(lexer->lexem_ind) +
                 " on " + std::to_string(lexem.line) + " line";
@@ -342,24 +383,31 @@ class Syntaxer {
                 " on " + std::to_string(lexem.line) + " line";
         }
         get();
+        tid_tree.leave_tid();
         if (lexem.name == "else") {
+            tid_tree.create_tid(NodeType::BODY);
             get();
-            if (lexem.name == "{") {
-                get();
-                Body_statements();
-                get();
-                if (lexem.name != "}") {
-                    throw lexem.name + " number " +
-                        std::to_string(lexer->lexem_ind) + " on " +
-                        std::to_string(lexem.line) + " line";
-                }
+            if (lexem.name != "{") {
+                throw lexem.name + " number " +
+                    std::to_string(lexer->lexem_ind) + " on " +
+                    std::to_string(lexem.line) + " line";
             }
+            get();
+            Body_statements();
+            get();
+            if (lexem.name != "}") {
+                throw lexem.name + " number " +
+                    std::to_string(lexer->lexem_ind) + " on " +
+                    std::to_string(lexem.line) + " line";
+            }
+            tid_tree.leave_tid();
         } else {
             --lexer->lexem_ind;
         }
     }
 
-    void For() {  // sem
+    void For() {                              // sem
+        tid_tree.create_tid(NodeType::BODY);  // sem
         if (lexem.name != "for") {
             throw lexem.name + " number " + std::to_string(lexer->lexem_ind) +
                 " on " + std::to_string(lexem.line) + " line";
@@ -371,24 +419,35 @@ class Syntaxer {
         }
         get();
         std::map<std::string, std::string> params;  // sem
-        Vars(params);  // TODO записать параметры в бади хуйни
-        type_stack.clear();  // sem
-        get();
+        while(lexem.type == 8)
+        {
+            std::pair<std::string, std::string> p = Var();
+            if (params.find(p.first) != params.end())
+            {
+                throw lexem.name + " number " +
+                    std::to_string(lexer->lexem_ind) + " on " +
+                    std::to_string(lexem.line) + " line";
+            }
+            params[p.first] = p.second;
+            get();
+        }
         if (lexem.name != ";") {
             throw lexem.name + " number " + std::to_string(lexer->lexem_ind) +
                 " on " + std::to_string(lexem.line) + " line";
         }
         get();
+
+        type_stack.clear();  // sem
         Expr();
         type_stack.eq_bool();  // sem
         type_stack.clear();    // sem
-
         get();
         if (lexem.name != ";") {
             throw lexem.name + " number " + std::to_string(lexer->lexem_ind) +
                 " on " + std::to_string(lexem.line) + " line";
         }
         get();
+
         Expr();
         get();
         if (lexem.name != ")") {
@@ -401,26 +460,32 @@ class Syntaxer {
                 " on " + std::to_string(lexem.line) + " line";
         }
         get();
-        Body_statements(params);
+        Body_statements();
         get();
         if (lexem.name != "}") {
             throw lexem.name + " number " + std::to_string(lexer->lexem_ind) +
                 " on " + std::to_string(lexem.line) + " line";
         }
-
+        // Stoyakovskiu::a_pochemy_vu_na(shkebede_toalete)? //TODO STOYAKOVSKY
         get();
+        tid_tree.leave_tid();
         if (lexem.name == "else") {
+            tid_tree.create_tid(NodeType::BODY);
             get();
-            if (lexem.name == "{") {
-                get();
-                Body_statements(params);
-                get();
-                if (lexem.name != "}") {
-                    throw lexem.name + " number " +
-                        std::to_string(lexer->lexem_ind) + " on " +
-                        std::to_string(lexem.line) + " line";
-                }
+            if (lexem.name != "{") {
+                throw lexem.name + " number " +
+                    std::to_string(lexer->lexem_ind) + " on " +
+                    std::to_string(lexem.line) + " line";
             }
+            get();
+            Body_statements();
+            get();
+            if (lexem.name != "}") {
+                throw lexem.name + " number " +
+                    std::to_string(lexer->lexem_ind) + " on " +
+                    std::to_string(lexem.line) + " line";
+            }
+            tid_tree.leave_tid();
         } else {
             --lexer->lexem_ind;
         }
@@ -511,9 +576,8 @@ class Syntaxer {
         tid_tree.get_func_type(name, types);
     }
 
-    void Vars(std::map<std::string, std::string>& params) {  // sem
-        std::pair<std::string, std::string> p = Var();       // sem
-        params[p.first] = p.second;                          // sem
+    void Vars(std::vector<std::pair<std::string, std::string>>& params) {         // sem
+        params.push_back(Var_without_sem());                        // sem
         get();
         Other_vars(params);
     }
@@ -595,12 +659,11 @@ class Syntaxer {
 
     void Exprs(std::vector<std::string>& types) {
         Assigment_expr();
-        // types.push_back(type_stack.back()); //TODO
         get();
         Other_exprs();
     }
 
-    void Other_vars(std::map<std::string, std::string>& params) {
+    void Other_vars(std::vector<std::pair<std::string, std::string>>& params) {
         while (lexem.type == 8) {
             Vars(params);
             get();
@@ -633,7 +696,7 @@ class Syntaxer {
                     std::to_string(lexer->lexem_ind) + " on " +
                     std::to_string(lexem.line) + " line";
             }
-            name += lexem.name;  // sem
+            name += "::" + lexem.name;  // sem
             get();
         }
         --lexer->lexem_ind;
@@ -652,7 +715,7 @@ class Syntaxer {
         --lexer->lexem_ind;
     }
 
-    void Return() {  // TODO not sem проверка типа возвращаемого значения
+    void Return() {
         if (lexem.name != "return") {
             throw lexem.name + " number " + std::to_string(lexer->lexem_ind) +
                 " on " + std::to_string(lexem.line) + " line";
@@ -667,10 +730,10 @@ class Syntaxer {
             throw lexem.name + " number " + std::to_string(lexer->lexem_ind) +
                 " on " + std::to_string(lexem.line) + " line";
         }
+        // tid_tree.check_return(type_stack.back()); //TODO
     }
 
     void Body_statement(std::map<std::string, std::string>& params) {  // sem
-        tid_tree.create_tid(NodeType::BODY);                           // sem
         for (const auto& elem : params) {
             tid_tree.push_var(elem.first, elem.second);
         }
@@ -678,8 +741,6 @@ class Syntaxer {
             lexem.name == "for" || lexem.name == "lopin" ||
             lexem.name == "lopout" || lexem.name == "delete") {
             Complicated_operator();
-        } else if (lexem.name == "type") {  // TODO Можно или нельзя
-            Complicated_type();
         } else if (lexem.type == 8) {
             Var();
         } else if (lexem.name == "break" || lexem.name == "continue") {
@@ -721,7 +782,7 @@ class Syntaxer {
             type_stack.push(lexem.name);  // sem
             get();
             Assigment_expr();
-            type_stack.check_bin();  // sem
+            type_stack.check_assignment();  // sem
             get();
         }
         --lexer->lexem_ind;
@@ -949,9 +1010,9 @@ class Syntaxer {
                     std::to_string(lexer->lexem_ind) + " on " +
                     std::to_string(lexem.line) + " line";
             }
-        } else if (lexem.type == 3 || lexem.type == 5) {
+        } else if (lexem.type == 3 || lexem.type == 4) {
             type_stack.push("byte8");  // sem
-        } else if (lexem.type == 4) {
+        } else if (lexem.type == 5) {
             type_stack.push("string");  // sem
         } else if (lexem.name == "{") {
             Init_list();
@@ -974,9 +1035,10 @@ class Syntaxer {
                 }
                 type_stack.push(tid_tree.get_func_type(name, types));
             } else if (lexem.name == ".") {
-                Call_field();
+                Call_field();                                  // TODO
                 type_stack.push(tid_tree.get_var_type(name));  // sem
             } else {
+                type_stack.push(tid_tree.get_var_type(name));  // sem
                 --lexer->lexem_ind;
             }
         } else {
@@ -987,7 +1049,7 @@ class Syntaxer {
 
     void Other_call_expr() {  // sem
         if (lexem.name == "[") {
-            // type_stack.eq_array(); //TODO
+            type_stack.eq_array();
             get();
             Expr();
             type_stack.eq_bool();  // sem

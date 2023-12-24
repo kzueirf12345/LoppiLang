@@ -5,9 +5,9 @@ scope scope1
         byte4 a;
         byte8 b = 345;
     }
-    byte c = 6;
+    byte a = 6;
 
-    function lol
+    function lol : byte
     {
         byte4 a = 5;
         if ((a))
@@ -19,16 +19,18 @@ scope scope1
             {
                 byte b = a;
             }
-        return 1325;
+        return a;
     }
+    lol();
     #asdfasdf qg()ADf as g df agsd
-    byte8 a = 0; #asldkfnalsdf
+    a = 0; #asldkfnalsdf
     byte8 b = a + a;
     string str = 'sdgf325-gst5___';
-    for (byte flag = true; byte4 i = 0;; i <= 16 -> 0+(+(~4)) / 3; i+ ++i)
+    for (byte flag = 1; byte4 i = 0;; i <= 16 -> 0+(+(~4)) / 3; i+ ++i)
     {
-        const_array <byte4, 17542324562345> temp_temp;
-        b += 2;
+        #const_array <byte4, 17542324562345> temp_temp = {flag};
+        scope1::b += 2;
+        byte b = 9;
     }
     a = 5;
     delete scope1::b;
@@ -37,5 +39,5 @@ scope scope1
 scope scope2
 {
     byte4 b = scope1::a;
-    lopout((scope1::b+b), 'asdf', 526254);
+    lopout((scope1::a + b), 'asdf', 526254);
 }
