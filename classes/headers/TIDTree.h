@@ -37,8 +37,11 @@ class TIDTree {
     };
 
    private:
+    std::string const_parser(const std::string& s) const;
+
     std::pair<std::string, std::vector<std::string>> path_parser(
         std::string raw) const;
+    std::vector<std::string> path_parser(std::string raw, char sep) const;
 
     std::string find_var(Node* cur, std::string& name,
                          const std::vector<std::string>& path,
@@ -58,8 +61,10 @@ class TIDTree {
     std::map<std::string, std::string>& find_type(Node* cur,
                                                   std::string name) const;
 
-    void find_field(std::string& type, std::vector<std::string>& path,
-                    int position) const;
+    std::string find_field(std::string& type, std::vector<std::string>& path,
+                           int position) const;
+
+    std::string check_return_type(Node* cur, const std::string& type) const;
 
     void erase_var(Node* cur, std::string name, std::vector<std::string> path,
                    int position);
@@ -80,12 +85,15 @@ class TIDTree {
     void create_tid(NodeType type, std::string name = "");
     void leave_tid();
 
-    std::string get_var_type(std::string name) const;
+    std::string get_var_type(std::string name, std::string fields = "") const;
     std::string get_func_type(std::string name,
                               std::vector<std::string> param_types) const;
     std::map<std::string, std::string> get_type_fields(std::string name) const;
-    void check_fields(std::string type, std::vector<std::string> path) const;
+
+    std::string check_fields(std::string type,
+                             std::vector<std::string> path) const;
     void check_jumps() const;
+    std::string check_return(std::string type) const;
 
     void push_var(std::string name, std::string type);
     void push_func(std::string name, std::string return_type,

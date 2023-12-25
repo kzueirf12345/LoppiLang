@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.5.7)
 project(Loppi VERSION 0.1.0 LANGUAGES C CXX)
 
 add_subdirectory(classes)

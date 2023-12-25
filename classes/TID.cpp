@@ -1,5 +1,31 @@
 #include "headers/TID.h"
 
+std::string const_parser(const std::string& s) {
+    if (s.size() <= 6) return s;
+
+    std::string pref = "";
+    for (int i = 0; i < 6; ++i) pref += s[i];
+
+    if (pref != "const_") return s;
+
+    std::string res = "";
+    for (int i = 6; i < (int)s.size(); ++i) res += s[i];
+    return res;
+}
+
+std::string check_cast(const std::string& s1, const std::string s2) {
+    auto f = const_parser(s1), s = const_parser(s2);
+
+    if (f == s && (f == "string" || f == "array")) return f;
+
+    while (f.size() > 4) f.pop_back();
+    while (s.size() > 4) s.pop_back();
+
+    if (f == s) return f;
+    throw std::logic_error("type " + s1 +
+                           " does not match the return type: " + s2);
+}
+
 void VarTID::insert(std::string name, std::string type) {
     if (_variables.count(name)) {
         throw std::invalid_argument("Variable " + name + " already exists");
@@ -53,8 +79,7 @@ std::string FuncTID::get_return_type(
         throw std::invalid_argument("Parametrs are incorrect");
 
     for (int i = 0; i < (int)param_types.size(); ++i) {
-        if (_functions.at(name).second[i].second != param_types[i])
-            throw std::invalid_argument("Parametrs are incorrect");
+        check_cast(_functions.at(name).second[i].second, param_types[i]);
     }
 
     return _functions.at(name).first;

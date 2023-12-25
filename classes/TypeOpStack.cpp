@@ -25,9 +25,22 @@ std::string TypeOpStack::max_byte(const std::string& l,
         return l.back() > r.back() ? l : r;
 }
 
+std::string TypeOpStack::check_cast(const std::string& s1,
+                                    const std::string s2) const {
+    auto f = const_parser(s1), s = const_parser(s2);
+
+    if (f == s && (f == "string" || f == "array")) return f;
+
+    while (f.size() > 4) f.pop_back();
+    while (s.size() > 4) s.pop_back();
+
+    if (f == s) return f;
+    throw std::logic_error("type " + s1 +
+                           " does not match the return type: " + s2);
+}
+
 std::string TypeOpStack::check_bin(std::string s1, std::string s2,
                                    std::string op) const {
-
     s1 = const_parser(s1);
     s2 = const_parser(s2);
 
@@ -45,13 +58,13 @@ std::string TypeOpStack::check_bin(std::string s1, std::string s2,
             return "byte";
     } else if (s1 == s2 && s1 == "array") {
         if (op == "==" || op == "!=") return "byte";
-    } else
-    {    if (_comp_ops.count(op) || _logic_bin_ops.count(op))
+    } else {
+        if (_comp_ops.count(op) || _logic_bin_ops.count(op))
             return "byte";
         else if (_bin_ops.count(op))
             return max_byte(s1, s2);
     }
-        throw std::logic_error(s1 + " " + op + " " + s2);
+    throw std::logic_error(s1 + " " + op + " " + s2);
 }
 
 std::string TypeOpStack::check_uno(std::string s, std::string op) const {
@@ -89,13 +102,14 @@ std::string TypeOpStack::check_assignment(std::string s1, std::string s2,
     if (s1 == s2 && s1 == "string") {
         if (op == "+=" || op == "=") return "string";
     } else {
-        if (_assign_ops.count(op))
+        if (_assign_ops.count(op) /* && max_byte(s1, s2) == s1 */)
             return max_byte(s1, s2);
     }
     throw std::logic_error(s1 + " " + op + " " + s2);
 }
 
 bool TypeOpStack::is_op(std::string s) const {
+    if (s == "void") return true;
     if (s == ",") return true;
     if (_built_in_types.count(s) || _const_built_in_types.count(s))
         return false;
@@ -208,6 +222,20 @@ void TypeOpStack::check_comma() {
     _stack.push_back(s);
 }
 
+void TypeOpStack::check_init_list(
+    const std::string& type,
+    const std::vector<std::string>& other_types) const {
+    for (auto& el : other_types) check_cast(el, type);
+}
+
 std::string TypeOpStack::back() const {
     if (_stack.size() == 0) throw std::logic_error("stack is empty");
+    return _stack.back();
+}
+
+std::string TypeOpStack::pop_back() {
+    if (_stack.size() == 0) throw std::logic_error("stack is empty");
+    std::string ans = back();
+    _stack.pop_back();
+    return ans;
 }

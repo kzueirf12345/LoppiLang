@@ -3,6 +3,7 @@
 #include <deque>
 #include <iostream>
 #include <string>
+#include <vector>
 #include <unordered_set>
 
 class TypeOpStack {
@@ -28,6 +29,8 @@ class TypeOpStack {
     std::string const_parser(const std::string& s) const;
     std::string max_byte(const std::string& l, const std::string r) const;
 
+    std::string check_cast(const std::string& s1, const std::string s2) const;
+
     std::string check_bin(std::string s1, std::string s2, std::string op) const;
     std::string check_uno(std::string s, std::string op) const;
     std::string check_assignment(std::string s1, std::string s2,
@@ -49,7 +52,10 @@ class TypeOpStack {
     void clear();
     void check_comma();
 
+    void check_init_list(const std::string& type, const std::vector<std::string>& other_types) const;
+
     int size() const { return _stack.size(); }
     std::string back() const;
     std::deque<std::string> get_stack() const { return _stack; }
+    std::string pop_back();
 };

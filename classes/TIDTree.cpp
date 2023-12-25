@@ -1,5 +1,18 @@
 #include "headers/TIDTree.h"
 
+std::string TIDTree::const_parser(const std::string& s) const {
+    if (s.size() <= 6) return s;
+
+    std::string pref = "";
+    for (int i = 0; i < 6; ++i) pref += s[i];
+
+    if (pref != "const_") return s;
+
+    std::string res = "";
+    for (int i = 6; i < (int)s.size(); ++i) res += s[i];
+    return res;
+}
+
 void Node::erase_child(std::string name) {
     if (!_children.count(name)) {
         throw std::invalid_argument("space " + name + " doesn't exist");
@@ -24,6 +37,19 @@ std::pair<std::string, std::vector<std::string>> TIDTree::path_parser(
     path.pop_back();
 
     return {name, path};
+}
+
+std::vector<std::string> TIDTree::path_parser(std::string raw, char sep) const {
+    std::vector<std::string> path;
+    for (int i = 0; i < (int)raw.size(); ++i) {
+        if (raw[i] == sep) {
+            path.push_back("");
+        } else {
+            path.back().push_back(raw[i]);
+        }
+    }
+
+    return path;
 }
 
 std::string TIDTree::find_var(Node* cur, std::string& name,
@@ -122,8 +148,9 @@ std::map<std::string, std::string>& TIDTree::find_type(Node* cur,
     }
 }
 
-void TIDTree::find_field(std::string& type, std::vector<std::string>& path,
-                         int position) const {
+std::string TIDTree::find_field(std::string& type,
+                                std::vector<std::string>& path,
+                                int position) const {
     auto fields = get_type_fields(type);
 
     if (!fields.count(path[position])) {
@@ -131,9 +158,35 @@ void TIDTree::find_field(std::string& type, std::vector<std::string>& path,
                                     path[position]);
     }
 
-    if (position == (int)path.size()) return;
+    if (position == (int)path.size() - 1) return fields[path[position]];
 
-    find_field(fields[path[position]], path, position + 1);
+    return find_field(fields[path[position]], path, position + 1);
+}
+
+std::string TIDTree::check_return_type(Node* cur,
+                                       const std::string& type) const {
+    if (cur->_type == NodeType::ROOT)
+        throw std::logic_error("you can't return " + type +
+                               " not in fucntions");
+    if (cur->_type != NodeType::FUNC)
+        return check_return_type(cur->_parent, type);
+
+    std::string return_type = cur->_parent->_tid.find_func(cur->_name);
+    return_type = const_parser(return_type);
+    auto new_type = const_parser(type);
+
+    if (return_type == new_type &&
+        (return_type == "string" || return_type == "array" ||
+         return_type == "void"))
+        return return_type;
+
+    while (return_type.size() > 4) return_type.pop_back();
+    while (new_type.size() > 4) new_type.pop_back();
+
+    if (return_type == new_type) return type;
+    throw std::logic_error("type " + type +
+                           " does not match the return type: " +
+                           cur->_parent->_tid.find_func(cur->_name));
 }
 
 void TIDTree::erase_var(Node* cur, std::string name,
@@ -244,13 +297,20 @@ void TIDTree::leave_tid() {
     }
 }
 
-std::string TIDTree::get_var_type(std::string name) const {
+std::string TIDTree::get_var_type(std::string name, std::string fields) const {
     auto [short_name, path] = path_parser(name);
+    auto field_path = path_parser(fields, '.');
 
-    if (path.size() == 0) {
-        return find_var(_current_node, short_name);
-    }
-    return find_var(_root, short_name, path, 0);
+    std::string name_type;
+
+    if (path.size() == 0)
+        name_type = find_var(_current_node, short_name);
+    else
+        name_type = find_var(_root, short_name, path, 0);
+
+    if (field_path.size() == 0) return name_type;
+
+    return check_fields(name_type, field_path);
 }
 
 std::string TIDTree::get_func_type(std::string name,
@@ -277,15 +337,19 @@ std::map<std::string, std::string> TIDTree::get_type_fields(
     return find_type(_root, short_name, path, 0);
 }
 
-void TIDTree::check_fields(std::string type,
-                           std::vector<std::string> path) const {
-    find_field(type, path, 0);
+std::string TIDTree::check_fields(std::string type,
+                                  std::vector<std::string> path) const {
+    return find_field(type, path, 0);
 }
 
 void TIDTree::check_jumps() const {
     for (auto& aim : _jump_aims) {
         check_scope(aim);
     }
+}
+
+std::string TIDTree::check_return(std::string type) const {
+    return check_return_type(_current_node, type);
 }
 
 void TIDTree::push_var(std::string name, std::string type) {
@@ -306,8 +370,7 @@ void TIDTree::push_func(std::string name, std::string return_type,
         throw std::logic_error("you can create funnctions directly in scopes");
     }
 
-    if (return_type != "void")
-        get_type_fields(return_type);
+    if (return_type != "void") get_type_fields(return_type);
 
     for (auto& [var, var_type] : params) {
         get_type_fields(var_type);

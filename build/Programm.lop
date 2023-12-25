@@ -5,9 +5,16 @@ scope scope1
         byte4 a;
         byte8 b = 345;
     }
-    byte a = 6;
+    asdf temp;
+    type asdf2
+    {
+        asdf pup;
+    }
+    asdf2 norm;
+    norm.pup.a = 123432;
+    byte4 a;
 
-    function lol : byte
+    function lol : byte (byte q, byte q2)
     {
         byte4 a = 5;
         if ((a))
@@ -18,17 +25,17 @@ scope scope1
             else
             {
                 byte b = a;
+                q2 = 0;
             }
-        return a;
+        return a + a / 2342314 * q;
     }
-    lol();
+    lol(a, temp.a + 5);
     #asdfasdf qg()ADf as g df agsd
     a = 0; #asldkfnalsdf
     byte8 b = a + a;
     string str = 'sdgf325-gst5___';
     for (byte flag = 1; byte4 i = 0;; i <= 16 -> 0+(+(~4)) / 3; i+ ++i)
     {
-        #const_array <byte4, 17542324562345> temp_temp = {flag};
         scope1::b += 2;
         byte b = 9;
     }
