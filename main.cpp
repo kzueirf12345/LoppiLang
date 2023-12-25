@@ -39,9 +39,13 @@ int main()
     {
         syntaxer.Programm();
     }
-    catch(const std::string& e)
+    catch(const Lexem& e)
     {
-        std::cerr << "Error syntax. Lexem "<< e << std::endl;
+        std::cerr << "Error syntax. Lexem "<< e.name << " on " << e.line << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << " on " << syntaxer.lexem.line << " line" << std::endl;
     }
 
     return 0;

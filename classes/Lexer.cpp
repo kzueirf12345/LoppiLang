@@ -103,7 +103,7 @@ void Lexer::Lexing(const std::string& programm_filename)
         std::cerr << "Some string is not close" << std::endl;
         exit(EXIT_FAILURE);
     }
-    std::cerr << "Lexer is OK" << std::endl;
+    std::cerr << "Lexical analyze is OK" << std::endl;
 }
 
 long long Lexer::Type(const std::string &lexem)

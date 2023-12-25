@@ -17,6 +17,7 @@ scope scope1
     function lol : byte (byte q, byte q2)
     {
         byte4 a = 5;
+        byte2 b = 3;
         if ((a))
             {
                 byte b = scope1::a -> a;
@@ -26,6 +27,10 @@ scope scope1
             {
                 byte b = a;
                 q2 = 0;
+                string k = 'sjlfdgljs';
+
+                #q2 = b + k;
+                if(q2){}
             }
         return a + a / 2342314 * q;
     }
@@ -40,11 +45,11 @@ scope scope1
         byte b = 9;
     }
     a = 5;
-    delete scope1::b;
+    delete scope1::a;
     jump scope2;
 }
 scope scope2
 {
-    byte4 b = scope1::a;
-    lopout((scope1::a + b), 'asdf', 526254);
+    byte4 b = scope1::b;
+    lopout((scope1::b + b), 'asdf', 526254);
 }
