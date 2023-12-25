@@ -5,6 +5,7 @@
 #include <sstream>
 #include <unordered_map>
 #include <unordered_set>
+#include <exception>
 
 #include "AVLTree.h"
 #include "Lexem.h"

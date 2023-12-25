@@ -3,7 +3,7 @@ scope scope1
     type asdf
     {
         byte4 a;
-        byte8 b = 345;
+        byte8 = 345;
     }
     asdf temp;
     type asdf2

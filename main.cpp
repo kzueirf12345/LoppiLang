@@ -2,8 +2,7 @@
 
 #define DEBUG true
 
-int main()
-{
+int main() {
     std::string grammar_filename;
 #if DEBUG
     grammar_filename = "Grammar_words.txt";
@@ -11,7 +10,7 @@ int main()
     std::cout << "Введите имя файла с зарезервированными словами:\n";
     std::cin >> grammar_filename;
 #endif
-    Lexer lexer(grammar_filename);    
+    Lexer lexer(grammar_filename);
     Syntaxer syntaxer(lexer);
 
     std::string programm_filename;
@@ -21,7 +20,11 @@ int main()
     std::cout << "Введите имя файла с программой:\n";
     std::cin >> programm_filename;
 #endif
-    lexer.Lexing(programm_filename);
+    try {
+        lexer.Lexing(programm_filename);
+    } catch (const std::exception& e) {
+        std::cerr << "Lexeical analyze error:\n" << e.what() << std::endl;
+    }
 
     std::string lexer_out_filename;
 #if DEBUG
@@ -31,21 +34,19 @@ int main()
     std::cin >> lexer_out_filename;
 #endif
     std::ofstream lexer_out_file(lexer_out_filename);
-    for (const auto &elem : lexer.Dict())
+    for (const auto& elem : lexer.Dict())
         lexer_out_file << elem.name << " " << elem.type << "\n";
     lexer_out_file.close();
 
-    try
-    {
+    try {
         syntaxer.Programm();
-    }
-    catch(const Lexem& e)
-    {
-        std::cerr << "Error syntax. Lexem "<< e.name << " on " << e.line << std::endl;
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << " on " << syntaxer.lexem.line << " line" << std::endl;
+    } catch (const Lexem& e) {
+        std::cerr << "Syntax analyze error:\n"
+                  << "Lexem " << e.name << " on " << e.line << " line" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Semantic analyze error:\n"
+                  << e.what() << " on " << syntaxer.lexem.line << " line"
+                  << std::endl;
     }
 
     return 0;

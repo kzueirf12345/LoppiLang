@@ -27,11 +27,13 @@ classes/CMakeFiles/cls.dir/AVLTree.cpp.o: /home/urodish/programming/инфа/Lop
   /usr/include/c++/13/bits/invoke.h \
   /usr/include/c++/13/bits/ios_base.h \
   /usr/include/c++/13/bits/istream.tcc \
+  /usr/include/c++/13/bits/iterator_concepts.h \
   /usr/include/c++/13/bits/locale_classes.h \
   /usr/include/c++/13/bits/locale_classes.tcc \
   /usr/include/c++/13/bits/locale_facets.h \
   /usr/include/c++/13/bits/locale_facets.tcc \
   /usr/include/c++/13/bits/localefwd.h \
+  /usr/include/c++/13/bits/max_size_type.h \
   /usr/include/c++/13/bits/memory_resource.h \
   /usr/include/c++/13/bits/memoryfwd.h \
   /usr/include/c++/13/bits/move.h \
@@ -43,6 +45,9 @@ classes/CMakeFiles/cls.dir/AVLTree.cpp.o: /home/urodish/programming/инфа/Lop
   /usr/include/c++/13/bits/predefined_ops.h \
   /usr/include/c++/13/bits/ptr_traits.h \
   /usr/include/c++/13/bits/range_access.h \
+  /usr/include/c++/13/bits/ranges_base.h \
+  /usr/include/c++/13/bits/ranges_cmp.h \
+  /usr/include/c++/13/bits/ranges_util.h \
   /usr/include/c++/13/bits/refwrap.h \
   /usr/include/c++/13/bits/requires_hosted.h \
   /usr/include/c++/13/bits/std_abs.h \
@@ -70,6 +75,8 @@ classes/CMakeFiles/cls.dir/AVLTree.cpp.o: /home/urodish/programming/инфа/Lop
   /usr/include/c++/13/cctype \
   /usr/include/c++/13/cerrno \
   /usr/include/c++/13/clocale \
+  /usr/include/c++/13/compare \
+  /usr/include/c++/13/concepts \
   /usr/include/c++/13/cstddef \
   /usr/include/c++/13/cstdio \
   /usr/include/c++/13/cstdlib \
@@ -90,6 +97,7 @@ classes/CMakeFiles/cls.dir/AVLTree.cpp.o: /home/urodish/programming/инфа/Lop
   /usr/include/c++/13/iostream \
   /usr/include/c++/13/istream \
   /usr/include/c++/13/new \
+  /usr/include/c++/13/numbers \
   /usr/include/c++/13/ostream \
   /usr/include/c++/13/pstl/pstl_config.h \
   /usr/include/c++/13/queue \
@@ -220,7 +228,9 @@ classes/CMakeFiles/cls.dir/Lexem.cpp.o: /home/urodish/programming/инфа/Loppi
   /usr/include/c++/13/bits/functional_hash.h \
   /usr/include/c++/13/bits/hash_bytes.h \
   /usr/include/c++/13/bits/invoke.h \
+  /usr/include/c++/13/bits/iterator_concepts.h \
   /usr/include/c++/13/bits/localefwd.h \
+  /usr/include/c++/13/bits/max_size_type.h \
   /usr/include/c++/13/bits/memory_resource.h \
   /usr/include/c++/13/bits/memoryfwd.h \
   /usr/include/c++/13/bits/move.h \
@@ -230,6 +240,9 @@ classes/CMakeFiles/cls.dir/Lexem.cpp.o: /home/urodish/programming/инфа/Loppi
   /usr/include/c++/13/bits/predefined_ops.h \
   /usr/include/c++/13/bits/ptr_traits.h \
   /usr/include/c++/13/bits/range_access.h \
+  /usr/include/c++/13/bits/ranges_base.h \
+  /usr/include/c++/13/bits/ranges_cmp.h \
+  /usr/include/c++/13/bits/ranges_util.h \
   /usr/include/c++/13/bits/refwrap.h \
   /usr/include/c++/13/bits/requires_hosted.h \
   /usr/include/c++/13/bits/std_abs.h \
@@ -248,6 +261,8 @@ classes/CMakeFiles/cls.dir/Lexem.cpp.o: /home/urodish/programming/инфа/Loppi
   /usr/include/c++/13/cctype \
   /usr/include/c++/13/cerrno \
   /usr/include/c++/13/clocale \
+  /usr/include/c++/13/compare \
+  /usr/include/c++/13/concepts \
   /usr/include/c++/13/cstddef \
   /usr/include/c++/13/cstdio \
   /usr/include/c++/13/cstdlib \
@@ -261,6 +276,7 @@ classes/CMakeFiles/cls.dir/Lexem.cpp.o: /home/urodish/programming/инфа/Loppi
   /usr/include/c++/13/initializer_list \
   /usr/include/c++/13/iosfwd \
   /usr/include/c++/13/new \
+  /usr/include/c++/13/numbers \
   /usr/include/c++/13/pstl/pstl_config.h \
   /usr/include/c++/13/string \
   /usr/include/c++/13/string_view \
@@ -379,11 +395,13 @@ classes/CMakeFiles/cls.dir/Lexer.cpp.o: /home/urodish/programming/инфа/Loppi
   /usr/include/c++/13/bits/invoke.h \
   /usr/include/c++/13/bits/ios_base.h \
   /usr/include/c++/13/bits/istream.tcc \
+  /usr/include/c++/13/bits/iterator_concepts.h \
   /usr/include/c++/13/bits/locale_classes.h \
   /usr/include/c++/13/bits/locale_classes.tcc \
   /usr/include/c++/13/bits/locale_facets.h \
   /usr/include/c++/13/bits/locale_facets.tcc \
   /usr/include/c++/13/bits/localefwd.h \
+  /usr/include/c++/13/bits/max_size_type.h \
   /usr/include/c++/13/bits/memory_resource.h \
   /usr/include/c++/13/bits/memoryfwd.h \
   /usr/include/c++/13/bits/move.h \
@@ -396,6 +414,11 @@ classes/CMakeFiles/cls.dir/Lexer.cpp.o: /home/urodish/programming/инфа/Loppi
   /usr/include/c++/13/bits/predefined_ops.h \
   /usr/include/c++/13/bits/ptr_traits.h \
   /usr/include/c++/13/bits/range_access.h \
+  /usr/include/c++/13/bits/ranges_algo.h \
+  /usr/include/c++/13/bits/ranges_algobase.h \
+  /usr/include/c++/13/bits/ranges_base.h \
+  /usr/include/c++/13/bits/ranges_cmp.h \
+  /usr/include/c++/13/bits/ranges_util.h \
   /usr/include/c++/13/bits/refwrap.h \
   /usr/include/c++/13/bits/requires_hosted.h \
   /usr/include/c++/13/bits/sstream.tcc \
@@ -429,6 +452,8 @@ classes/CMakeFiles/cls.dir/Lexer.cpp.o: /home/urodish/programming/инфа/Loppi
   /usr/include/c++/13/cctype \
   /usr/include/c++/13/cerrno \
   /usr/include/c++/13/clocale \
+  /usr/include/c++/13/compare \
+  /usr/include/c++/13/concepts \
   /usr/include/c++/13/cstddef \
   /usr/include/c++/13/cstdio \
   /usr/include/c++/13/cstdlib \
@@ -451,6 +476,7 @@ classes/CMakeFiles/cls.dir/Lexer.cpp.o: /home/urodish/programming/инфа/Loppi
   /usr/include/c++/13/iostream \
   /usr/include/c++/13/istream \
   /usr/include/c++/13/new \
+  /usr/include/c++/13/numbers \
   /usr/include/c++/13/ostream \
   /usr/include/c++/13/pstl/execution_defs.h \
   /usr/include/c++/13/pstl/glue_algorithm_defs.h \
@@ -609,11 +635,13 @@ classes/CMakeFiles/cls.dir/Syntaxer.cpp.o: /home/urodish/programming/инфа/Lo
   /usr/include/c++/13/bits/invoke.h \
   /usr/include/c++/13/bits/ios_base.h \
   /usr/include/c++/13/bits/istream.tcc \
+  /usr/include/c++/13/bits/iterator_concepts.h \
   /usr/include/c++/13/bits/locale_classes.h \
   /usr/include/c++/13/bits/locale_classes.tcc \
   /usr/include/c++/13/bits/locale_facets.h \
   /usr/include/c++/13/bits/locale_facets.tcc \
   /usr/include/c++/13/bits/localefwd.h \
+  /usr/include/c++/13/bits/max_size_type.h \
   /usr/include/c++/13/bits/memory_resource.h \
   /usr/include/c++/13/bits/memoryfwd.h \
   /usr/include/c++/13/bits/move.h \
@@ -626,6 +654,11 @@ classes/CMakeFiles/cls.dir/Syntaxer.cpp.o: /home/urodish/programming/инфа/Lo
   /usr/include/c++/13/bits/predefined_ops.h \
   /usr/include/c++/13/bits/ptr_traits.h \
   /usr/include/c++/13/bits/range_access.h \
+  /usr/include/c++/13/bits/ranges_algo.h \
+  /usr/include/c++/13/bits/ranges_algobase.h \
+  /usr/include/c++/13/bits/ranges_base.h \
+  /usr/include/c++/13/bits/ranges_cmp.h \
+  /usr/include/c++/13/bits/ranges_util.h \
   /usr/include/c++/13/bits/refwrap.h \
   /usr/include/c++/13/bits/requires_hosted.h \
   /usr/include/c++/13/bits/sstream.tcc \
@@ -664,6 +697,8 @@ classes/CMakeFiles/cls.dir/Syntaxer.cpp.o: /home/urodish/programming/инфа/Lo
   /usr/include/c++/13/cctype \
   /usr/include/c++/13/cerrno \
   /usr/include/c++/13/clocale \
+  /usr/include/c++/13/compare \
+  /usr/include/c++/13/concepts \
   /usr/include/c++/13/cstddef \
   /usr/include/c++/13/cstdio \
   /usr/include/c++/13/cstdlib \
@@ -687,6 +722,7 @@ classes/CMakeFiles/cls.dir/Syntaxer.cpp.o: /home/urodish/programming/инфа/Lo
   /usr/include/c++/13/istream \
   /usr/include/c++/13/map \
   /usr/include/c++/13/new \
+  /usr/include/c++/13/numbers \
   /usr/include/c++/13/ostream \
   /usr/include/c++/13/pstl/execution_defs.h \
   /usr/include/c++/13/pstl/glue_algorithm_defs.h \
@@ -832,11 +868,13 @@ classes/CMakeFiles/cls.dir/TID.cpp.o: /home/urodish/programming/инфа/Loppi/c
   /usr/include/c++/13/bits/invoke.h \
   /usr/include/c++/13/bits/ios_base.h \
   /usr/include/c++/13/bits/istream.tcc \
+  /usr/include/c++/13/bits/iterator_concepts.h \
   /usr/include/c++/13/bits/locale_classes.h \
   /usr/include/c++/13/bits/locale_classes.tcc \
   /usr/include/c++/13/bits/locale_facets.h \
   /usr/include/c++/13/bits/locale_facets.tcc \
   /usr/include/c++/13/bits/localefwd.h \
+  /usr/include/c++/13/bits/max_size_type.h \
   /usr/include/c++/13/bits/memory_resource.h \
   /usr/include/c++/13/bits/memoryfwd.h \
   /usr/include/c++/13/bits/move.h \
@@ -849,6 +887,9 @@ classes/CMakeFiles/cls.dir/TID.cpp.o: /home/urodish/programming/инфа/Loppi/c
   /usr/include/c++/13/bits/predefined_ops.h \
   /usr/include/c++/13/bits/ptr_traits.h \
   /usr/include/c++/13/bits/range_access.h \
+  /usr/include/c++/13/bits/ranges_base.h \
+  /usr/include/c++/13/bits/ranges_cmp.h \
+  /usr/include/c++/13/bits/ranges_util.h \
   /usr/include/c++/13/bits/refwrap.h \
   /usr/include/c++/13/bits/requires_hosted.h \
   /usr/include/c++/13/bits/std_abs.h \
@@ -878,6 +919,8 @@ classes/CMakeFiles/cls.dir/TID.cpp.o: /home/urodish/programming/инфа/Loppi/c
   /usr/include/c++/13/cctype \
   /usr/include/c++/13/cerrno \
   /usr/include/c++/13/clocale \
+  /usr/include/c++/13/compare \
+  /usr/include/c++/13/concepts \
   /usr/include/c++/13/cstddef \
   /usr/include/c++/13/cstdio \
   /usr/include/c++/13/cstdlib \
@@ -899,6 +942,7 @@ classes/CMakeFiles/cls.dir/TID.cpp.o: /home/urodish/programming/инфа/Loppi/c
   /usr/include/c++/13/istream \
   /usr/include/c++/13/map \
   /usr/include/c++/13/new \
+  /usr/include/c++/13/numbers \
   /usr/include/c++/13/ostream \
   /usr/include/c++/13/pstl/pstl_config.h \
   /usr/include/c++/13/set \
@@ -1037,11 +1081,13 @@ classes/CMakeFiles/cls.dir/TIDTree.cpp.o: /home/urodish/programming/инфа/Lop
   /usr/include/c++/13/bits/invoke.h \
   /usr/include/c++/13/bits/ios_base.h \
   /usr/include/c++/13/bits/istream.tcc \
+  /usr/include/c++/13/bits/iterator_concepts.h \
   /usr/include/c++/13/bits/locale_classes.h \
   /usr/include/c++/13/bits/locale_classes.tcc \
   /usr/include/c++/13/bits/locale_facets.h \
   /usr/include/c++/13/bits/locale_facets.tcc \
   /usr/include/c++/13/bits/localefwd.h \
+  /usr/include/c++/13/bits/max_size_type.h \
   /usr/include/c++/13/bits/memory_resource.h \
   /usr/include/c++/13/bits/memoryfwd.h \
   /usr/include/c++/13/bits/move.h \
@@ -1054,6 +1100,9 @@ classes/CMakeFiles/cls.dir/TIDTree.cpp.o: /home/urodish/programming/инфа/Lop
   /usr/include/c++/13/bits/predefined_ops.h \
   /usr/include/c++/13/bits/ptr_traits.h \
   /usr/include/c++/13/bits/range_access.h \
+  /usr/include/c++/13/bits/ranges_base.h \
+  /usr/include/c++/13/bits/ranges_cmp.h \
+  /usr/include/c++/13/bits/ranges_util.h \
   /usr/include/c++/13/bits/refwrap.h \
   /usr/include/c++/13/bits/requires_hosted.h \
   /usr/include/c++/13/bits/std_abs.h \
@@ -1083,6 +1132,8 @@ classes/CMakeFiles/cls.dir/TIDTree.cpp.o: /home/urodish/programming/инфа/Lop
   /usr/include/c++/13/cctype \
   /usr/include/c++/13/cerrno \
   /usr/include/c++/13/clocale \
+  /usr/include/c++/13/compare \
+  /usr/include/c++/13/concepts \
   /usr/include/c++/13/cstddef \
   /usr/include/c++/13/cstdio \
   /usr/include/c++/13/cstdlib \
@@ -1104,6 +1155,7 @@ classes/CMakeFiles/cls.dir/TIDTree.cpp.o: /home/urodish/programming/инфа/Lop
   /usr/include/c++/13/istream \
   /usr/include/c++/13/map \
   /usr/include/c++/13/new \
+  /usr/include/c++/13/numbers \
   /usr/include/c++/13/ostream \
   /usr/include/c++/13/pstl/pstl_config.h \
   /usr/include/c++/13/set \
@@ -1245,11 +1297,13 @@ classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o: /home/urodish/programming/инфа
   /usr/include/c++/13/bits/invoke.h \
   /usr/include/c++/13/bits/ios_base.h \
   /usr/include/c++/13/bits/istream.tcc \
+  /usr/include/c++/13/bits/iterator_concepts.h \
   /usr/include/c++/13/bits/locale_classes.h \
   /usr/include/c++/13/bits/locale_classes.tcc \
   /usr/include/c++/13/bits/locale_facets.h \
   /usr/include/c++/13/bits/locale_facets.tcc \
   /usr/include/c++/13/bits/localefwd.h \
+  /usr/include/c++/13/bits/max_size_type.h \
   /usr/include/c++/13/bits/memory_resource.h \
   /usr/include/c++/13/bits/memoryfwd.h \
   /usr/include/c++/13/bits/move.h \
@@ -1262,6 +1316,9 @@ classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o: /home/urodish/programming/инфа
   /usr/include/c++/13/bits/predefined_ops.h \
   /usr/include/c++/13/bits/ptr_traits.h \
   /usr/include/c++/13/bits/range_access.h \
+  /usr/include/c++/13/bits/ranges_base.h \
+  /usr/include/c++/13/bits/ranges_cmp.h \
+  /usr/include/c++/13/bits/ranges_util.h \
   /usr/include/c++/13/bits/refwrap.h \
   /usr/include/c++/13/bits/requires_hosted.h \
   /usr/include/c++/13/bits/std_abs.h \
@@ -1288,6 +1345,8 @@ classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o: /home/urodish/programming/инфа
   /usr/include/c++/13/cctype \
   /usr/include/c++/13/cerrno \
   /usr/include/c++/13/clocale \
+  /usr/include/c++/13/compare \
+  /usr/include/c++/13/concepts \
   /usr/include/c++/13/cstddef \
   /usr/include/c++/13/cstdio \
   /usr/include/c++/13/cstdlib \
@@ -1309,6 +1368,7 @@ classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o: /home/urodish/programming/инфа
   /usr/include/c++/13/iostream \
   /usr/include/c++/13/istream \
   /usr/include/c++/13/new \
+  /usr/include/c++/13/numbers \
   /usr/include/c++/13/ostream \
   /usr/include/c++/13/pstl/pstl_config.h \
   /usr/include/c++/13/stdexcept \
@@ -1443,6 +1503,8 @@ classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o: /home/urodish/programming/инфа
 
 /usr/include/c++/13/bits/unordered_map.h:
 
+/usr/include/c++/13/bits/ranges_algobase.h:
+
 /usr/include/c++/13/bits/node_handle.h:
 
 /usr/include/c++/13/bits/hashtable.h:
@@ -1458,8 +1520,6 @@ classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o: /home/urodish/programming/инфа
 /usr/include/c++/13/algorithm:
 
 /home/urodish/programming/инфа/Loppi/classes/headers/Lexer.h:
-
-/home/urodish/programming/инфа/Loppi/classes/Lexer.cpp:
 
 /usr/include/c++/13/bits/fstream.tcc:
 
@@ -1492,10 +1552,6 @@ classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o: /home/urodish/programming/инфа
 /usr/include/x86_64-linux-gnu/bits/types/time_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
-
-/home/urodish/programming/инфа/Loppi/classes/Syntaxer.cpp:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
 
 /usr/include/c++/13/bits/stl_tempbuf.h:
 
@@ -1559,15 +1615,33 @@ classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o: /home/urodish/programming/инфа
 
 /usr/include/x86_64-linux-gnu/asm/errno.h:
 
-/usr/include/c++/13/bits/stl_map.h:
+/usr/include/stdlib.h:
 
-/usr/include/c++/13/bits/stl_uninitialized.h:
+/usr/include/stdio.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
+/usr/include/stdc-predef.h:
 
-/usr/include/x86_64-linux-gnu/bits/floatn-common.h:
+/usr/include/sched.h:
 
-/usr/include/c++/13/bits/stl_queue.h:
+/usr/include/pthread.h:
+
+/usr/include/c++/13/ext/aligned_buffer.h:
+
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
+
+/usr/include/locale.h:
+
+/usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
+
+/usr/include/linux/errno.h:
+
+/usr/include/features.h:
+
+/home/urodish/programming/инфа/Loppi/classes/Syntaxer.cpp:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
+
+/usr/include/c++/13/compare:
 
 /usr/include/c++/13/bits/stl_construct.h:
 
@@ -1587,29 +1661,31 @@ classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o: /home/urodish/programming/инфа
 
 /usr/include/c++/13/bits/string_view.tcc:
 
-/usr/include/features.h:
+/usr/include/c++/13/bits/ranges_algo.h:
 
 /usr/include/c++/13/bits/ostream_insert.h:
-
-/usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
-
-/usr/include/c++/13/bits/exception.h:
-
-/usr/include/c++/13/streambuf:
 
 /usr/include/c++/13/bits/sstream.tcc:
 
 /usr/include/c++/13/cwctype:
 
+/usr/include/time.h:
+
+/usr/include/c++/13/bits/memoryfwd.h:
+
 /usr/include/c++/13/bits/predefined_ops.h:
 
 /usr/include/c++/13/iosfwd:
 
-/usr/include/time.h:
+/usr/include/c++/13/bits/ranges_cmp.h:
 
-/usr/include/c++/13/bits/memoryfwd.h:
+/usr/include/c++/13/bits/stl_algo.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
+
+/usr/include/c++/13/cstddef:
+
+/usr/include/c++/13/vector:
 
 /usr/include/wchar.h:
 
@@ -1621,11 +1697,27 @@ classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o: /home/urodish/programming/инфа
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/error_constants.h:
 
+/usr/include/c++/13/bits/stl_heap.h:
+
+/usr/include/c++/13/bits/localefwd.h:
+
+/usr/include/c++/13/bits/exception_defines.h:
+
+/usr/include/c++/13/bits/locale_facets.h:
+
+/usr/include/x86_64-linux-gnu/sys/single_threaded.h:
+
+/usr/include/c++/13/type_traits:
+
 /usr/include/c++/13/bits/hashtable_policy.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
 
 /usr/include/c++/13/bits/char_traits.h:
+
+/usr/include/c++/13/bit:
+
+/usr/include/c++/13/bits/basic_string.tcc:
 
 /usr/include/alloca.h:
 
@@ -1643,14 +1735,6 @@ classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o: /home/urodish/programming/инфа
 
 /usr/include/c++/13/bits/move.h:
 
-/usr/include/c++/13/bits/basic_string.tcc:
-
-/usr/include/c++/13/bit:
-
-/usr/include/x86_64-linux-gnu/sys/single_threaded.h:
-
-/usr/include/c++/13/type_traits:
-
 /usr/include/c++/13/bits/invoke.h:
 
 /home/urodish/programming/инфа/Loppi/classes/headers/AVLTree.h:
@@ -1664,8 +1748,6 @@ classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o: /home/urodish/programming/инфа
 /usr/include/c++/13/bits/uniform_int_dist.h:
 
 /usr/include/c++/13/bits/stringfwd.h:
-
-/usr/include/c++/13/bits/ostream.tcc:
 
 /usr/include/x86_64-linux-gnu/bits/types.h:
 
@@ -1693,21 +1775,25 @@ classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o: /home/urodish/programming/инфа
 
 /usr/include/ctype.h:
 
+/usr/include/c++/13/bits/ostream.tcc:
+
+/usr/include/c++/13/numbers:
+
 /usr/include/c++/13/string:
 
-/usr/include/c++/13/bits/exception_defines.h:
+/usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
-/usr/include/c++/13/bits/localefwd.h:
+/usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
 
-/home/urodish/programming/инфа/Loppi/classes/headers/Syntaxer.h:
+/usr/include/c++/13/streambuf:
 
-/usr/include/c++/13/unordered_set:
-
-/usr/include/c++/13/bits/stl_vector.h:
+/usr/include/c++/13/bits/exception.h:
 
 /usr/include/c++/13/bits/hash_bytes.h:
 
 /usr/include/c++/13/queue:
+
+/usr/include/c++/13/bits/ranges_util.h:
 
 /usr/include/asm-generic/errno-base.h:
 
@@ -1717,9 +1803,17 @@ classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o: /home/urodish/programming/инфа
 
 /usr/include/c++/13/bits/exception_ptr.h:
 
+/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
+
+/usr/include/c++/13/cerrno:
+
 /usr/include/c++/13/bits/concept_check.h:
 
 /usr/include/c++/13/bits/alloc_traits.h:
+
+/usr/include/c++/13/new:
+
+/usr/include/c++/13/ext/alloc_traits.h:
 
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
@@ -1729,13 +1823,15 @@ classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o: /home/urodish/programming/инфа
 
 /usr/include/c++/13/ios:
 
-/usr/include/c++/13/bits/stl_heap.h:
+/usr/include/c++/13/bits/ranges_base.h:
 
-/usr/include/c++/13/ext/alloc_traits.h:
+/usr/lib/llvm-16/lib/clang/16/include/__stddef_max_align_t.h:
 
-/usr/include/c++/13/new:
+/usr/include/c++/13/istream:
 
-/usr/include/c++/13/bits/locale_facets.h:
+/usr/include/c++/13/string_view:
+
+/usr/include/features-time64.h:
 
 /usr/include/x86_64-linux-gnu/bits/endianness.h:
 
@@ -1743,7 +1839,25 @@ classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o: /home/urodish/programming/инфа
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/gthr-default.h:
 
-/usr/include/stdc-predef.h:
+/home/urodish/programming/инфа/Loppi/classes/Lexer.cpp:
+
+/usr/include/c++/13/bits/iterator_concepts.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/floatn-common.h:
+
+/usr/include/c++/13/bits/stl_queue.h:
+
+/usr/include/c++/13/bits/stl_map.h:
+
+/usr/include/c++/13/bits/stl_uninitialized.h:
+
+/home/urodish/programming/инфа/Loppi/classes/headers/Syntaxer.h:
+
+/usr/include/c++/13/unordered_set:
+
+/usr/include/c++/13/bits/stl_vector.h:
 
 /usr/include/c++/13/bits/stl_multiset.h:
 
@@ -1771,37 +1885,29 @@ classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o: /home/urodish/programming/инфа
 
 /usr/include/c++/13/deque:
 
+/usr/include/c++/13/bits/vector.tcc:
+
+/usr/include/c++/13/clocale:
+
 /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
 
 /usr/include/x86_64-linux-gnu/bits/floatn.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h:
 
-/usr/include/c++/13/bits/vector.tcc:
+/usr/include/c++/13/concepts:
 
-/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
+/usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
 
-/usr/include/c++/13/cerrno:
-
-/usr/include/stdio.h:
-
-/usr/include/c++/13/clocale:
-
-/usr/include/c++/13/bits/stl_algo.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
-
-/usr/include/c++/13/cstddef:
-
-/usr/include/c++/13/vector:
+/usr/include/c++/13/ext/numeric_traits.h:
 
 /usr/include/c++/13/fstream:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
 
-/usr/include/c++/13/bits/stl_pair.h:
-
 /usr/include/c++/13/bits/charconv.h:
+
+/usr/include/c++/13/bits/stl_pair.h:
 
 /usr/include/c++/13/cstdio:
 
@@ -1825,23 +1931,11 @@ classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o: /home/urodish/programming/инфа
 
 /usr/include/c++/13/ext/atomicity.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
-
-/usr/include/c++/13/ext/numeric_traits.h:
-
 /usr/include/c++/13/ext/string_conversions.h:
 
 /home/urodish/programming/инфа/Loppi/classes/AVLTree.cpp:
 
 /usr/include/c++/13/initializer_list:
-
-/usr/lib/llvm-16/lib/clang/16/include/__stddef_max_align_t.h:
-
-/usr/include/c++/13/istream:
-
-/usr/include/c++/13/string_view:
-
-/usr/include/features-time64.h:
 
 /usr/include/c++/13/bits/streambuf_iterator.h:
 
@@ -1885,22 +1979,8 @@ classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o: /home/urodish/programming/инфа
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/gthr.h:
 
-/usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
-
-/usr/include/linux/errno.h:
+/usr/include/c++/13/bits/max_size_type.h:
 
 /usr/include/c++/13/bits/streambuf.tcc:
 
 /usr/include/endian.h:
-
-/usr/include/c++/13/ext/aligned_buffer.h:
-
-/usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
-
-/usr/include/locale.h:
-
-/usr/include/pthread.h:
-
-/usr/include/sched.h:
-
-/usr/include/stdlib.h:

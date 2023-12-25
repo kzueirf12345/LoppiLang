@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/urodish/programming/инфа/Loppi/classes/headers
 
-CXX_FLAGS = -g
+CXX_FLAGS = -g -std=gnu++20
 
