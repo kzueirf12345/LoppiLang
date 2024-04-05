@@ -1,4 +1,4 @@
-#include "Syntaxer.h"
+#include "classes/Analyze/Syntaxer.h"
 
 #define DEBUG true
 

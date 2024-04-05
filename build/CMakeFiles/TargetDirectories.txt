@@ -1,6 +1,3 @@
 /home/urodish/programming/инфа/Loppi/build/CMakeFiles/main.dir
 /home/urodish/programming/инфа/Loppi/build/CMakeFiles/edit_cache.dir
 /home/urodish/programming/инфа/Loppi/build/CMakeFiles/rebuild_cache.dir
-/home/urodish/programming/инфа/Loppi/build/classes/CMakeFiles/cls.dir
-/home/urodish/programming/инфа/Loppi/build/classes/CMakeFiles/edit_cache.dir
-/home/urodish/programming/инфа/Loppi/build/classes/CMakeFiles/rebuild_cache.dir
