@@ -5,34 +5,51 @@ scope scope1
         byte4 a;
         byte8 b = 345;
     }
-
-    function lol
+    asdf temp;
+    type asdf2
     {
+        asdf pup;
+    }
+    asdf2 norm;
+    norm.pup.a = 123432;
+    byte4 a;
+
+    function lol : byte (byte q, byte q2)
+    {
+        byte4 a = 5;
+        byte2 b = 3;
         if ((a))
             {
-                b -> asdf;
-                a = ~((((b)+4)/2) - 16)**(1+a);
+                byte b = scope1::a -> a;
+                a = ((((b)+4)/2) - 16)**(1+a);
             }
             else
             {
-                b = a;
+                byte b = a;
+                q2 = 0;
+                string k = 'sjlfdgljs';
+
+                # q2 = b + k;
+                if(q2){}
             }
-        return 1325 + asdf;
+        return a + a / 2342314 * q;
     }
+    lol(a, temp.a + 5);
     #asdfasdf qg()ADf as g df agsd
-    byte8 a; #asldkfnalsdf
+    a = 0; #asldkfnalsdf
     byte8 b = a + a;
     string str = 'sdgf325-gst5___';
-    for (byte flag = true; byte4 i = 0;; i <= 16 -> 0+(+(~4)) / 3; i+ ++i)
+    for (byte flag = 1; byte4 i = 0;; i <= 16 -> 0+((4)) / 3; i+i)
     {
-        const_array <byte4, 17542324562345 + asdf + 'goer'> temp_temp;
-        b += 2;
+        scope1::b += 2;
+        byte b = 9;
     }
-    a =  5;
-    delete b;
-    jump asdfasdf::sdfaasdf;
+    a = 5;
+    delete scope1::a;
+    jump scope2;
 }
 scope scope2
 {
-    lopout((b+23456), afdgag, 526254, asdf + 'sdgf');
+    byte4 b = scope1::b;
+    lopout((scope1::b + b), 'asdf', 526254);
 }

@@ -3,6 +3,7 @@
 #include "Lexer.h"
 #include "../TID/TIDTree.h"
 #include "../TypeOpStack/TypeOpStack.h"
+#include "../RPN/RPN.h"
 
 class Syntaxer {
    public:

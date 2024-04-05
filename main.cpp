@@ -5,7 +5,7 @@
 int main() {
     std::string grammar_filename;
 #if DEBUG
-    grammar_filename = "Grammar_words.txt";
+    grammar_filename = "../Grammar/Grammar_words.txt";
 #else
     std::cout << "Введите имя файла с зарезервированными словами:\n";
     std::cin >> grammar_filename;
@@ -15,7 +15,7 @@ int main() {
 
     std::string programm_filename;
 #if DEBUG
-    programm_filename = "Programm.lop";
+    programm_filename = "../Grammar/Programm.lop";
 #else
     std::cout << "Введите имя файла с программой:\n";
     std::cin >> programm_filename;

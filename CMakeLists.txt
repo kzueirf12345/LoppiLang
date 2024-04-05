@@ -11,4 +11,6 @@ classes/TID/TID.cpp
 classes/TID/TIDTree.cpp
 classes/TypeOpStack/TypeOpStack.cpp
 
-classes/Utils/Utils.cpp)
+classes/Utils/Utils.cpp
+
+classes/RPN/RPN.cpp)
