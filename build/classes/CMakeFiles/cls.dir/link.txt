@@ -1,2 +1,0 @@
-/usr/bin/ar qc libcls.a CMakeFiles/cls.dir/AVLTree.cpp.o CMakeFiles/cls.dir/Lexer.cpp.o CMakeFiles/cls.dir/Lexem.cpp.o CMakeFiles/cls.dir/Syntaxer.cpp.o CMakeFiles/cls.dir/TID.cpp.o CMakeFiles/cls.dir/TIDTree.cpp.o CMakeFiles/cls.dir/TypeOpStack.cpp.o
-/usr/bin/ranlib libcls.a

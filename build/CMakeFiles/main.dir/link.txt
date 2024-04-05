@@ -1,1 +1,0 @@
-/usr/bin/clang++ -g CMakeFiles/main.dir/main.cpp.o -o main  classes/libcls.a 
