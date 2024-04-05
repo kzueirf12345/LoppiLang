@@ -51,5 +51,10 @@
 		"streambuf": "cpp",
 		"typeinfo": "cpp"
 	},
-	"C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
+	"C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+	"workbench.colorCustomizations": {
+		"activityBar.background": "#23272E",
+		"titleBar.activeBackground": "#2E333C",
+		"titleBar.activeForeground": "#FAFAFB"
+	}
 }

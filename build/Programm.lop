@@ -3,7 +3,7 @@ scope scope1
     type asdf
     {
         byte4 a;
-        byte8 = 345;
+        byte8 b = 345;
     }
     asdf temp;
     type asdf2
@@ -29,7 +29,7 @@ scope scope1
                 q2 = 0;
                 string k = 'sjlfdgljs';
 
-                #q2 = b + k;
+                q2 = b + k;
                 if(q2){}
             }
         return a + a / 2342314 * q;

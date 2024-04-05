@@ -1,49 +1,49 @@
 [
 {
   "directory": "/home/urodish/programming/инфа/Loppi/build",
-  "command": "/usr/bin/clang++  -I/home/urodish/programming/инфа/Loppi/classes/headers -g -std=gnu++20 -o CMakeFiles/main.dir/main.cpp.o -c /home/urodish/programming/инфа/Loppi/main.cpp",
+  "command": "/usr/bin/clang++ -I/home/urodish/programming/инфа/Loppi/classes/headers -g -std=gnu++20 -o CMakeFiles/main.dir/main.cpp.o -c /home/urodish/programming/инфа/Loppi/main.cpp",
   "file": "/home/urodish/programming/инфа/Loppi/main.cpp",
   "output": "CMakeFiles/main.dir/main.cpp.o"
 },
 {
-  "directory": "/home/urodish/programming/инфа/Loppi/build/classes",
-  "command": "/usr/bin/clang++  -I/home/urodish/programming/инфа/Loppi/classes/headers -g -std=gnu++20 -o CMakeFiles/cls.dir/AVLTree.cpp.o -c /home/urodish/programming/инфа/Loppi/classes/AVLTree.cpp",
+  "directory": "/home/urodish/programming/инфа/Loppi/build",
+  "command": "/usr/bin/clang++ -I/home/urodish/programming/инфа/Loppi/classes/headers -g -std=gnu++20 -o classes/CMakeFiles/cls.dir/AVLTree.cpp.o -c /home/urodish/programming/инфа/Loppi/classes/AVLTree.cpp",
   "file": "/home/urodish/programming/инфа/Loppi/classes/AVLTree.cpp",
   "output": "classes/CMakeFiles/cls.dir/AVLTree.cpp.o"
 },
 {
-  "directory": "/home/urodish/programming/инфа/Loppi/build/classes",
-  "command": "/usr/bin/clang++  -I/home/urodish/programming/инфа/Loppi/classes/headers -g -std=gnu++20 -o CMakeFiles/cls.dir/Lexer.cpp.o -c /home/urodish/programming/инфа/Loppi/classes/Lexer.cpp",
+  "directory": "/home/urodish/programming/инфа/Loppi/build",
+  "command": "/usr/bin/clang++ -I/home/urodish/programming/инфа/Loppi/classes/headers -g -std=gnu++20 -o classes/CMakeFiles/cls.dir/Lexer.cpp.o -c /home/urodish/programming/инфа/Loppi/classes/Lexer.cpp",
   "file": "/home/urodish/programming/инфа/Loppi/classes/Lexer.cpp",
   "output": "classes/CMakeFiles/cls.dir/Lexer.cpp.o"
 },
 {
-  "directory": "/home/urodish/programming/инфа/Loppi/build/classes",
-  "command": "/usr/bin/clang++  -I/home/urodish/programming/инфа/Loppi/classes/headers -g -std=gnu++20 -o CMakeFiles/cls.dir/Lexem.cpp.o -c /home/urodish/programming/инфа/Loppi/classes/Lexem.cpp",
+  "directory": "/home/urodish/programming/инфа/Loppi/build",
+  "command": "/usr/bin/clang++ -I/home/urodish/programming/инфа/Loppi/classes/headers -g -std=gnu++20 -o classes/CMakeFiles/cls.dir/Lexem.cpp.o -c /home/urodish/programming/инфа/Loppi/classes/Lexem.cpp",
   "file": "/home/urodish/programming/инфа/Loppi/classes/Lexem.cpp",
   "output": "classes/CMakeFiles/cls.dir/Lexem.cpp.o"
 },
 {
-  "directory": "/home/urodish/programming/инфа/Loppi/build/classes",
-  "command": "/usr/bin/clang++  -I/home/urodish/programming/инфа/Loppi/classes/headers -g -std=gnu++20 -o CMakeFiles/cls.dir/Syntaxer.cpp.o -c /home/urodish/programming/инфа/Loppi/classes/Syntaxer.cpp",
+  "directory": "/home/urodish/programming/инфа/Loppi/build",
+  "command": "/usr/bin/clang++ -I/home/urodish/programming/инфа/Loppi/classes/headers -g -std=gnu++20 -o classes/CMakeFiles/cls.dir/Syntaxer.cpp.o -c /home/urodish/programming/инфа/Loppi/classes/Syntaxer.cpp",
   "file": "/home/urodish/programming/инфа/Loppi/classes/Syntaxer.cpp",
   "output": "classes/CMakeFiles/cls.dir/Syntaxer.cpp.o"
 },
 {
-  "directory": "/home/urodish/programming/инфа/Loppi/build/classes",
-  "command": "/usr/bin/clang++  -I/home/urodish/programming/инфа/Loppi/classes/headers -g -std=gnu++20 -o CMakeFiles/cls.dir/TID.cpp.o -c /home/urodish/programming/инфа/Loppi/classes/TID.cpp",
+  "directory": "/home/urodish/programming/инфа/Loppi/build",
+  "command": "/usr/bin/clang++ -I/home/urodish/programming/инфа/Loppi/classes/headers -g -std=gnu++20 -o classes/CMakeFiles/cls.dir/TID.cpp.o -c /home/urodish/programming/инфа/Loppi/classes/TID.cpp",
   "file": "/home/urodish/programming/инфа/Loppi/classes/TID.cpp",
   "output": "classes/CMakeFiles/cls.dir/TID.cpp.o"
 },
 {
-  "directory": "/home/urodish/programming/инфа/Loppi/build/classes",
-  "command": "/usr/bin/clang++  -I/home/urodish/programming/инфа/Loppi/classes/headers -g -std=gnu++20 -o CMakeFiles/cls.dir/TIDTree.cpp.o -c /home/urodish/programming/инфа/Loppi/classes/TIDTree.cpp",
+  "directory": "/home/urodish/programming/инфа/Loppi/build",
+  "command": "/usr/bin/clang++ -I/home/urodish/programming/инфа/Loppi/classes/headers -g -std=gnu++20 -o classes/CMakeFiles/cls.dir/TIDTree.cpp.o -c /home/urodish/programming/инфа/Loppi/classes/TIDTree.cpp",
   "file": "/home/urodish/programming/инфа/Loppi/classes/TIDTree.cpp",
   "output": "classes/CMakeFiles/cls.dir/TIDTree.cpp.o"
 },
 {
-  "directory": "/home/urodish/programming/инфа/Loppi/build/classes",
-  "command": "/usr/bin/clang++  -I/home/urodish/programming/инфа/Loppi/classes/headers -g -std=gnu++20 -o CMakeFiles/cls.dir/TypeOpStack.cpp.o -c /home/urodish/programming/инфа/Loppi/classes/TypeOpStack.cpp",
+  "directory": "/home/urodish/programming/инфа/Loppi/build",
+  "command": "/usr/bin/clang++ -I/home/urodish/programming/инфа/Loppi/classes/headers -g -std=gnu++20 -o classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o -c /home/urodish/programming/инфа/Loppi/classes/TypeOpStack.cpp",
   "file": "/home/urodish/programming/инфа/Loppi/classes/TypeOpStack.cpp",
   "output": "classes/CMakeFiles/cls.dir/TypeOpStack.cpp.o"
 }
