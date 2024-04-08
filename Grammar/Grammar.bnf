@@ -1,6 +1,6 @@
 <Programm> ::= <Scope> <Subprogramm>
 <Subprogramm> ::= <Scope> <Subprogramm> | E
-<Scope> ::= "scope" ( <Name> )? "{" <Statements> "}"
+<Scope> ::= "scope" <Name> "{" <Statements> "}"
 
 <Name> ::= <Name_start> <Name_body>
 <Name_start> ::= [a-z] | "_"
@@ -11,11 +11,11 @@
 
 <Statements> ::= <Statement> <Other_statements>
 <Other_statements> ::= <Statement> <Other_statements> | E
-<Statement> ::= <Function> | <Complicated_operator> | <Complicated_type> | <Var> | <Jump>
+<Statement> ::= <Function> | <Complicated_operator> | <Complicated_type> | <Var> | <Jump> | <Scope
 
 <Function> ::= "function" <Name> (":" <Type>)? ("(" <Var_enum> ")")? "{" <Func_statements> "}"
 
-<Complicated_operator> ::= <If> | <While> | <For> | <Lopin> | <Lopout> | <Delete> | <Call_func> ";"
+<Complicated_operator> ::= <If> | <While> | <For> | <Lopin> | <Lopout> | <Delete>
 
 <Complicated_type> ::= "type" <Name> "{" <Vars> "}"
 
@@ -28,31 +28,31 @@
 <Type> ::= <Const_type> | <Mutable_type>
 <Const_type> ::= "const_" <Mutable_type>
 <Mutable_type> ::= <Num_type> | "string" | "array <" <Type> "," <Expr> ">" | <Call_name>
-<Num_type> ::= "byte" | "byte2" | "byte4" | "byte8" | "bool"
+<Num_type> ::= "byte" | "byte2" | "byte4" | "byte8"
 
 
 <Func_statements> ::= <Func_statement> <Other_func_statements>
 <Other_func_statements> ::= <Func_statement> <Other_func_statements> | E
-<Func_statement> ::= <Complicated_operator> | <Var> | <Return> | <Complicated_type>
+<Func_statement> ::= <Complicated_operator> | <Var> | <Return> | <Expr>
 
 <Body_statements> ::= <Body_statement> <Body_statements> | E
-<Body_statement> ::= <Complicated_operator> | <Complicated_type> | <Var> | <Jump_operator> | <Return>
+<Body_statement> ::= <Complicated_operator> | <Var> | <Jump_operator> | <Return> | <Expr>
 
 
 <If> ::= "if" "(" <Expr> ")" "{" <Body_statements> "}" ( <Else_if> )?
 <Else> ::= "else" "{" <Body_statements> "}"
 <Else_if> ::= "else" ("{" <Body_statements> "}" | <If>)
 
-<While> ::= "while" "(" <Expr> ")" "{" <Body_statements> "}" ( <Else> )? 
+<While> ::= "while" "(" <Expr> ")" "{" <Body_statements> "}"
 
-<For> ::= "for" "(" <Vars> ";" <Expr> ";" <Expr> ")" "{" <Body_statements> "}" ( <Else> )?
+<For> ::= "for" "(" <Vars> ";" <Expr> ";" <Expr> ")" "{" <Body_statements> "}"
 
 <Jump_operator> ::= <Break> | <Continue>
 <Break> ::= "break" ";"
 <Continue> ::= "continue" ";"
 <Jump> ::= "jump" <Call_name> ";"
 
-<Lopin> ::= "lopin" "(" <Names> ")" ";"
+<Lopin> ::= "lopin" "(" <Call_names> ")" ";"
 <Lopout> ::= "lopout" "(" <Exprs> ")" ";"
 
 <Delete> ::= "delete" <Call_name> ";"
@@ -105,14 +105,10 @@
 <Power> ::= <Unary> <Other_power>
 <Other_power> ::= "**" <Power> <Other_power> | E
 
-<Unary> ::= <Unary_operator> <Unary> | <Call_expr> 
+<Unary> ::= <Unary_operator> <Unary> | <GenSec>
 <Unary_operator> ::= "++" | "--" | "+" | "-" | "!" | "~"
 
-<Call_expr> ::= <GenSec> <Other_call_expr>
-<Other_call_expr> ::= <Call_operator> <Other_call_expr> | E
-<Call_operator> ::= "[" <Expr> "]"
-
-<GenSec> ::= <Num_literal> | <String_literal> | <Call_name_with_field> | <Init_list> | <Call_func> | <Logic_literal>
+<GenSec> ::= <Num_literal> | <String_literal> | <Call_func> | <Logic_literal> | <Expr> | <Call_name>
 
 <Num_literal> ::= [0-9] | [1-9] <Num_literal>
 <String_literal> ::= "'" <String_content> "'"
@@ -120,15 +116,11 @@
 <String_symbol> ::= <Symbol> | " " | "\n" | "\t"
 <Logic_literal> ::= "true" | "false"
 
-<Init_list> ::= "{" <Init_list_content> "}"
-<Init_list_content> ::= <Expr> <Other_init_list_content>
-<Other_init_list_content> ::= "," <Expr> <Other_init_list_content> | E
 
-
-<Call_name_with_field> ::= <Call_name> (<Call_field>)?
 <Call_name> ::= <Name> <Other_call_name>
+<Call_names> ::= <Call_name> <Other_call_names>
+<Other_call_names> ::= <Call_name> <Other_names> | E
 <Other_call_name> ::= "::" <Name> <Other_call_name> | E
-<Call_field> ::= "." <Name> <Call_field>
 
 <Call_func> ::= <Call_name> "(" <Exprs> ")"
 

@@ -90,6 +90,10 @@ rpn_elem& GlobalRPN::operator[](int id) {
     }
 }
 
+rpn_elem& GlobalRPN::back() {
+    return _all_data[_current_rpn_id][_all_data[_current_rpn_id].size() - 1];
+}
+
 void GlobalRPN::print_global_rpn() const {
     for (int i = 0; i < (int)_all_data.size(); ++i) {
         cout << i << " ";

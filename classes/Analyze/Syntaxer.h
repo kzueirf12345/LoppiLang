@@ -31,6 +31,9 @@ class Syntaxer {
         get();
         Subprogramm();
         tid_tree.check_jumps();
+
+        rpn.push("eof");
+
         std::cerr << "Syntax analyze is OK" << std::endl;
         std::cerr << "Semantic analyze is OK" << std::endl;
     }
@@ -38,7 +41,6 @@ class Syntaxer {
     void Scope() {
         if (lexem.name != "scope") {
             throw lexem;
-            ;
         }
         get();
         if (lexem.type != 2) {
@@ -196,6 +198,7 @@ class Syntaxer {
         rpn.push(name);                 // gen
         get();
         if (lexem.name == "=") {
+            rpn.back()._name += address_marker;
             get();
             type_stack.push(type);  // sem
             type_stack.push("=");   // sem
@@ -339,7 +342,6 @@ class Syntaxer {
         if (lexem.name != "}") {
             throw lexem;
         }
-        get();
         tid_tree.leave_tid();  // sem
 
         auto p2 = rpn.size();                   // gen
@@ -359,7 +361,7 @@ class Syntaxer {
         }
         get();
         std::map<std::string, std::string> params;  // sem
-        while (lexem.type == 8) {                   // TODO убрал lexem.type == 2
+        while (lexem.type == 8) {
             std::pair<std::string, std::string> p = Var();
             if (params.find(p.first) != params.end()) {
                 throw lexem;
@@ -384,19 +386,20 @@ class Syntaxer {
         rpn.blank("F!");             // gen
         auto p2 = rpn.size();        // gen
         rpn.blank("!");              // gen
-        auto address3 = rpn.size();  // gen
 
         if (lexem.name != ";") {
             throw lexem;
         }
         rpn.push(";");  // gen
         get();
+        auto address3 = rpn.size();  // gen
 
         Expr();
         get();
         if (lexem.name != ")") {
             throw lexem;
         }
+        rpn.push(";");                          // gen
 
         auto p4 = rpn.size();                   // gen
         rpn.blank("!");                         // gen
@@ -736,6 +739,7 @@ class Syntaxer {
                lexem.name == "-=" || lexem.name == "*=" || lexem.name == "**=" ||
                lexem.name == "/=" || lexem.name == "^=" || lexem.name == "&=" ||
                lexem.name == "|=" || lexem.name == "%=") {
+            rpn.back()._name += address_marker;
             type_stack.push(lexem.name);  // sem
             string name = lexem.name;     // gen
             get();
@@ -1029,6 +1033,8 @@ class Syntaxer {
     Lexem lexem;
 
    private:
+    const string address_marker = "$";
+
     vector<string> scope;
     Lexer* lexer;
 

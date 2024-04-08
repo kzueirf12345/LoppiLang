@@ -89,6 +89,7 @@ class GlobalRPN {
     int size() const { return _all_data[_current_rpn_id].size(); }
 
     rpn_elem& operator[](int id);
+    rpn_elem& back();
 
     void print_global_rpn() const;
 };
