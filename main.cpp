@@ -49,5 +49,7 @@ int main() {
                   << std::endl;
     }
 
+    syntaxer.RPN().print_global_rpn();
+
     return 0;
 }

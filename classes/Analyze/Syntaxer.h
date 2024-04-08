@@ -1,14 +1,28 @@
 #pragma once
 
-#include "Lexer.h"
+#include "../RPN/RPN.h"
 #include "../TID/TIDTree.h"
 #include "../TypeOpStack/TypeOpStack.h"
-#include "../RPN/RPN.h"
+#include "Lexer.h"
+
+using std::to_string;
 
 class Syntaxer {
    public:
     Syntaxer(Lexer& lexer)
-        : lexer(&lexer), tid_tree(TIDTree()), type_stack(TypeOpStack()) {}
+        : lexer(&lexer), tid_tree(TIDTree()), type_stack(TypeOpStack()), rpn(GlobalRPN()) {}
+
+    [[nodiscard]] GlobalRPN& RPN() noexcept { return rpn; }
+    [[nodiscard]] const GlobalRPN& RPN() const noexcept { return rpn; }
+
+    string str_scope() const {
+        string res;
+        for (int i = 0; i < scope.size() - 1; ++i) {
+            res += scope[i] + "::";
+        }
+        res += scope.back();
+        return res;
+    }
 
     void Programm() {
         lexer->PushLexem("Lol", true);
@@ -21,7 +35,7 @@ class Syntaxer {
         std::cerr << "Semantic analyze is OK" << std::endl;
     }
 
-    void Scope() {  // sem
+    void Scope() {
         if (lexem.name != "scope") {
             throw lexem;
             ;
@@ -32,6 +46,8 @@ class Syntaxer {
         }
         std::string name = lexem.name;               // sem
         tid_tree.create_tid(NodeType::SCOPE, name);  // sem
+        scope.push_back(name);                       // gen
+        rpn.push_scope(str_scope());                 // gen
         get();
         if (lexem.name != "{") {
             throw lexem;
@@ -43,6 +59,7 @@ class Syntaxer {
         if (lexem.name != "}") {
             throw lexem;
         }
+        scope.pop_back();      // gen
         tid_tree.leave_tid();  // sem
     }
 
@@ -63,16 +80,15 @@ class Syntaxer {
         type_stack.clear();
         if (lexem.name == "function") {
             Function();
-        } else if (lexem.name == "if" || lexem.name == "while" ||
-                   lexem.name == "for" || lexem.name == "lopin" ||
-                   lexem.name == "lopout" || lexem.name == "delete") {
+        } else if (lexem.name == "if" || lexem.name == "while" || lexem.name == "for" ||
+                   lexem.name == "lopin" || lexem.name == "lopout" || lexem.name == "delete") {
             Complicated_operator();
-        } else if (lexem.name == "type") {
-            Complicated_type();
         } else if (lexem.type == 8) {
             Var();
         } else if (lexem.name == "jump") {
             Jump();
+        } else if (lexem.name == "scope") {
+            Scope();
         } else if (lexem.type == 2) {
             auto pos = lexer->lexem_ind;
             try {
@@ -85,6 +101,7 @@ class Syntaxer {
                 if (lexem.name != ";") {
                     throw lexem;
                 }
+                rpn.push(";");  // gen
             }
         } else {
             Expr();
@@ -92,23 +109,22 @@ class Syntaxer {
             if (lexem.name != ";") {
                 throw lexem;
             }
+            rpn.push(";");  // gen
         }
     }
 
     void Other_statements() {
-        while (lexem.name == "function" || lexem.name == "if" ||
-               lexem.name == "while" || lexem.name == "for" ||
-               lexem.name == "lopin" || lexem.name == "lopout" ||
-               lexem.name == "delete" || lexem.type == 2 ||
-               lexem.name == "type" || lexem.type == 8 ||
-               lexem.name == "jump") {
+        while (lexem.name == "function" || lexem.name == "if" || lexem.name == "while" ||
+               lexem.name == "for" || lexem.name == "lopin" || lexem.name == "lopout" ||
+               lexem.name == "delete" || lexem.type == 2 || lexem.name == "type" ||
+               lexem.type == 8 || lexem.name == "jump" || lexem.name == "scope") {
             Statement();
             get();
         }
         --lexer->lexem_ind;
     }
 
-    void Function() {  // sem
+    void Function() {
         if (lexem.name != "function") {
             throw lexem;
         }
@@ -136,6 +152,7 @@ class Syntaxer {
         }
         tid_tree.push_func(name, type, params);     // sem
         tid_tree.create_tid(NodeType::FUNC, name);  // sem
+        rpn.push_func(name, type, params);          // gen
         if (lexem.name != "{") {
             throw lexem;
         }
@@ -146,6 +163,7 @@ class Syntaxer {
             throw lexem;
         }
         tid_tree.leave_tid();  // sem
+        rpn.leave_func();      // gen
     }
 
     void Complicated_operator() {
@@ -166,39 +184,8 @@ class Syntaxer {
         }
     }
 
-    void Complicated_type() {  // sem
-        if (lexem.name != "type") {
-            throw lexem;
-        }
-        get();
-        if (lexem.type != 2) {
-            throw lexem;
-        }
-        std::string name = lexem.name;  // sem
-        // lexer->tree.insert(name, 8);
-        get();
-        if (lexem.name != "{") {
-            throw lexem;
-        }
-        std::vector<std::pair<std::string, std::string>> fields;  // sem
-        get();
-        Vars(fields);
-        std::map<std::string, std::string> fields_map;
-        for (const auto& elem : fields) {
-            fields_map[elem.first] = elem.second;
-        }
-        if (fields.size() != fields_map.size()) {
-            throw lexem;
-        }
-        get();
-        if (lexem.name != "}") {
-            throw lexem;
-        }
-        tid_tree.push_type(name, fields_map);  // sem
-    }
-
-    std::pair<std::string, std::string> Var() {  // sem
-        std::string type = Type();               // sem
+    std::pair<std::string, std::string> Var() {
+        std::string type = Type();  // sem
         get();
         if (lexem.type != 2) {
             throw lexem;
@@ -206,6 +193,7 @@ class Syntaxer {
         std::string name = lexem.name;  // sem
         // std::cout << name << " " << type << std::endl;
         tid_tree.push_var(name, type);  // sem
+        rpn.push(name);                 // gen
         get();
         if (lexem.name == "=") {
             get();
@@ -215,52 +203,33 @@ class Syntaxer {
             type_stack.check_assignment();  // sem
             type_stack.clear();             // sem
             get();
+            rpn.push("=");  // gen
         }
         if (lexem.name != ";") {
             throw lexem;
         }
+        rpn.push(";");  // gen
         return {name, type};
     }
 
-    std::pair<std::string, std::string> Var_without_sem() {  // sem
-        std::string type = Type();                           // sem
-        get();
-        if (lexem.type != 2) {
-            throw lexem;
-        }
-        std::string name = lexem.name;  // sem
-        get();
-        if (lexem.name == "=") {
-            get();
-            type_stack.push(type);  // sem
-            type_stack.push("=");   // sem
-            Expr();
-            type_stack.check_assignment();  // sem
-            type_stack.clear();             // sem
-            get();
-        }
-        if (lexem.name != ";") {
-            throw lexem;
-        }
-        return {name, type};
-    }
-
-    void Jump() {  // sem
+    void Jump() {
         if (lexem.name != "jump") {
             throw lexem;
         }
         get();
-        std::string name;  // sem
-        Call_name(name);   // sem
+        std::string name;      // sem
+        Call_name(name);       // sem
+        rpn.jump_blank(name);  // gen
         get();
         if (lexem.name != ";") {
             throw lexem;
         }
+        rpn.push(";");             // gen
         tid_tree.push_jump(name);  // sem
     }
 
-    void Var_enum(func_parameters& params) {  // sem
-        std::string type = Type();            // sem
+    void Var_enum(func_parameters& params) {
+        std::string type = Type();  // sem
         get();
         if (lexem.type != 2) {
             throw lexem;
@@ -293,6 +262,8 @@ class Syntaxer {
         if (lexem.name != ")") {
             throw lexem;
         }
+        auto p1 = rpn.size();  // gen
+        rpn.blank("F!");       // gen
         get();
         if (lexem.name != "{") {
             throw lexem;
@@ -305,7 +276,11 @@ class Syntaxer {
             throw lexem;
         }
         get();
-        tid_tree.leave_tid();
+        tid_tree.leave_tid();                        // sem
+        auto p2 = rpn.size();                        // gen
+        rpn.blank();                                 // gen
+        rpn[p1]._name = std::to_string(rpn.size());  // gen
+
         if (lexem.name == "else") {
             get();
             if (lexem.name == "{") {
@@ -325,10 +300,15 @@ class Syntaxer {
         } else {
             --lexer->lexem_ind;
         }
+
+        rpn[p2]._name = std::to_string(rpn.size());  // gen
     }
 
-    void While() {                            // sem
+    void While() {
         tid_tree.create_tid(NodeType::BODY);  // sem
+
+        auto adress1 = rpn.size();  // gen
+
         if (lexem.name != "while") {
             throw lexem;
         }
@@ -346,6 +326,10 @@ class Syntaxer {
             throw lexem;
         }
         get();
+
+        auto p1 = rpn.size();  // gen
+        rpn.blank("F!");       // gen
+
         if (lexem.name != "{") {
             throw lexem;
         }
@@ -356,26 +340,15 @@ class Syntaxer {
             throw lexem;
         }
         get();
-        tid_tree.leave_tid();
-        if (lexem.name == "else") {
-            tid_tree.create_tid(NodeType::BODY);
-            get();
-            if (lexem.name != "{") {
-                throw lexem;
-            }
-            get();
-            Body_statements();
-            get();
-            if (lexem.name != "}") {
-                throw lexem;
-            }
-            tid_tree.leave_tid();
-        } else {
-            --lexer->lexem_ind;
-        }
+        tid_tree.leave_tid();  // sem
+
+        auto p2 = rpn.size();                   // gen
+        rpn.blank();                            // gen
+        rpn[p2]._name = to_string(adress1);     // gen
+        rpn[p1]._name = to_string(rpn.size());  // gen
     }
 
-    void For() {                              // sem
+    void For() {
         tid_tree.create_tid(NodeType::BODY);  // sem
         if (lexem.name != "for") {
             throw lexem;
@@ -386,7 +359,7 @@ class Syntaxer {
         }
         get();
         std::map<std::string, std::string> params;  // sem
-        while (lexem.type == 8 || lexem.type == 2) {
+        while (lexem.type == 8) {                   // TODO убрал lexem.type == 2
             std::pair<std::string, std::string> p = Var();
             if (params.find(p.first) != params.end()) {
                 throw lexem;
@@ -398,15 +371,25 @@ class Syntaxer {
             throw lexem;
         }
         get();
+        rpn.push(";");               // gen
+        auto address4 = rpn.size();  // gen
 
         type_stack.clear();  // sem
         Expr();
         type_stack.eq_bool();  // sem
         type_stack.clear();    // sem
         get();
+
+        auto p1 = rpn.size();        // gen
+        rpn.blank("F!");             // gen
+        auto p2 = rpn.size();        // gen
+        rpn.blank("!");              // gen
+        auto address3 = rpn.size();  // gen
+
         if (lexem.name != ";") {
             throw lexem;
         }
+        rpn.push(";");  // gen
         get();
 
         Expr();
@@ -414,6 +397,12 @@ class Syntaxer {
         if (lexem.name != ")") {
             throw lexem;
         }
+
+        auto p4 = rpn.size();                   // gen
+        rpn.blank("!");                         // gen
+        rpn[p4]._name = to_string(address4);    // gen
+        rpn[p2]._name = to_string(rpn.size());  // gen
+
         get();
         if (lexem.name != "{") {
             throw lexem;
@@ -424,25 +413,15 @@ class Syntaxer {
         if (lexem.name != "}") {
             throw lexem;
         }
-        // Stoyakovskiu::a_pochemy_vu_na(shkebede_toalete)? //TODO STOYAKOVSKY
-        get();
-        tid_tree.leave_tid();
-        if (lexem.name == "else") {
-            tid_tree.create_tid(NodeType::BODY);
-            get();
-            if (lexem.name != "{") {
-                throw lexem;
-            }
-            get();
-            Body_statements();
-            get();
-            if (lexem.name != "}") {
-                throw lexem;
-            }
-            tid_tree.leave_tid();
-        } else {
-            --lexer->lexem_ind;
-        }
+
+        auto p3 = rpn.size();                   // gen
+        rpn.blank("!");                         // gen
+        rpn[p3]._name = to_string(address3);    // gen
+        rpn[p1]._name = to_string(rpn.size());  // gen
+
+        // Stoyakovskiu::a_pochemy_vu_na(shkebede_toalete)? STOYAKOVSKY
+        // get(); //TODO почему закоментили то блять
+        tid_tree.leave_tid();  // sem
     }
 
     void Lopin() {
@@ -455,15 +434,24 @@ class Syntaxer {
         }
         get();
         std::vector<std::string> parametrs;
+
         Call_names(parametrs);
         get();
         if (lexem.name != ")") {
             throw lexem;
         }
+
+        for (auto& el : parametrs) {  // gen
+            rpn.push(el);
+        }
+        rpn.push(to_string(parametrs.size()));  // gen
+        rpn.push("lopin");                      // gen
+
         get();
         if (lexem.name != ";") {
             throw lexem;
         }
+        rpn.push(";");  // gen
     }
 
     void Call_names(std::vector<std::string>& parametrs) {
@@ -500,13 +488,19 @@ class Syntaxer {
         if (lexem.name != ")") {
             throw lexem;
         }
+
+        rpn.push(to_string(types.size()));  // gen
+        rpn.push("lopout");                 // gen
+
         get();
         if (lexem.name != ";") {
             throw lexem;
         }
+
+        rpn.push(";");  // gen
     }
 
-    void Delete() {  // sem
+    void Delete() {
         if (lexem.name != "delete") {
             throw lexem;
         }
@@ -514,13 +508,19 @@ class Syntaxer {
         std::string name;  // sem
         Call_name(name);
         tid_tree.delete_var(name);  // sem
+
+        rpn.push(name);      // gen
+        rpn.push("delete");  // gen
+
         get();
         if (lexem.name != ";") {
             throw lexem;
         }
+
+        rpn.push(";");  // gen
     }
 
-    void Call_func() {     // sem
+    void Call_func() {
         std::string name;  // sem
         Call_name(name);
         get();
@@ -530,18 +530,13 @@ class Syntaxer {
         get();
         std::vector<std::string> types;  // sem
         Exprs(types);
+        rpn.push(name);    // gen
+        rpn.push("call");  // gen
         get();
         if (lexem.name != ")") {
             throw lexem;
         }
         tid_tree.get_func_type(name, types);
-    }
-
-    void Vars(
-        std::vector<std::pair<std::string, std::string>>& params) {  // sem
-        params.push_back(Var_without_sem());                         // sem
-        get();
-        Other_vars(params);
     }
 
     void Expr() {
@@ -550,7 +545,7 @@ class Syntaxer {
         Other_expr();
     }
 
-    void Call_name(std::string& name) {  // sem
+    void Call_name(std::string& name) {
         if (lexem.type != 2) {
             throw lexem;
         }
@@ -569,16 +564,13 @@ class Syntaxer {
     }
 
     void Func_statement() {
-        if (lexem.name == "if" || lexem.name == "while" ||
-            lexem.name == "for" || lexem.name == "lopin" ||
-            lexem.name == "lopout" || lexem.name == "delete") {
+        if (lexem.name == "if" || lexem.name == "while" || lexem.name == "for" ||
+            lexem.name == "lopin" || lexem.name == "lopout" || lexem.name == "delete") {
             Complicated_operator();
         } else if (lexem.type == 8) {
             Var();
         } else if (lexem.name == "return") {
             Return();
-        } else if (lexem.name == "type") {
-            Complicated_type();
         } else if (lexem.type == 2) {
             auto pos = lexer->lexem_ind;
             try {
@@ -591,6 +583,7 @@ class Syntaxer {
                 if (lexem.name != ";") {
                     throw lexem;
                 }
+                rpn.push(";");  // gen
             }
         } else {
             Expr();
@@ -598,13 +591,13 @@ class Syntaxer {
             if (lexem.name != ";") {
                 throw lexem;
             }
+            rpn.push(";");  // gen
         }
     }
 
     void Other_func_statements() {
-        while (lexem.name == "if" || lexem.name == "while" ||
-               lexem.name == "for" || lexem.name == "lopin" ||
-               lexem.name == "lopout" || lexem.name == "delete" ||
+        while (lexem.name == "if" || lexem.name == "while" || lexem.name == "for" ||
+               lexem.name == "lopin" || lexem.name == "lopout" || lexem.name == "delete" ||
                lexem.type == 2 || lexem.type == 8 || lexem.name == "return" ||
                lexem.name == "type") {
             type_stack.clear();
@@ -615,9 +608,8 @@ class Syntaxer {
     }
 
     void Body_statements(std::map<std::string, std::string> params = {}) {
-        while (lexem.name == "if" || lexem.name == "while" ||
-               lexem.name == "for" || lexem.name == "lopin" ||
-               lexem.name == "lopout" || lexem.name == "delete" ||
+        while (lexem.name == "if" || lexem.name == "while" || lexem.name == "for" ||
+               lexem.name == "lopin" || lexem.name == "lopout" || lexem.name == "delete" ||
                lexem.type == 2 || lexem.type == 8 || lexem.name == "type" ||
                lexem.name == "break" || lexem.name == "continue" ||
                lexem.name == "return")  // для return в функциях
@@ -635,32 +627,26 @@ class Syntaxer {
         Other_exprs(types);
     }
 
-    void Other_vars(std::vector<std::pair<std::string, std::string>>& params) {
-        while (lexem.type == 8 || lexem.type == 2) {
-            Vars(params);
-            get();
-        }
-        --lexer->lexem_ind;
-    }
-
     void Assigment_expr() {
         Logical_implication();
         get();
         Other_assigment_expr();
     }
 
-    void Other_expr() {  // sem
+    void Other_expr() {
         while (lexem.name == ",") {
-            type_stack.push(",");  // sem
+            type_stack.push(",");      // sem
+            string name = lexem.name;  // gen
             get();
             Assigment_expr();
             type_stack.check_comma();
+            rpn.push(name);  // gen
             get();
         }
         --lexer->lexem_ind;
     }
 
-    void Other_call_name(std::string& name) {  // sem
+    void Other_call_name(std::string& name) {
         while (lexem.name == "::") {
             get();
             if (lexem.type != 2) {
@@ -672,42 +658,32 @@ class Syntaxer {
         --lexer->lexem_ind;
     }
 
-    void Call_field(std::string& fields) {
-        while (lexem.name == ".") {
-            fields += ".";
-            get();
-            if (lexem.type != 2) {
-                throw lexem;
-            }
-            fields += lexem.name;
-            get();
-        }
-        --lexer->lexem_ind;
-    }
-
     void Return() {
         if (lexem.name != "return") {
             throw lexem;
         }
         get();
-        if (lexem.type == 2 || lexem.type == 3 || lexem.type == 4 ||
-            lexem.type == 5 || lexem.name == "{") {
+        if (lexem.type == 2 || lexem.type == 3 || lexem.type == 4 || lexem.type == 5 ||
+            lexem.name == "{") {
             Expr();
             get();
         }
+
+        rpn.push("ret");  // gen
+
         if (lexem.name != ";") {
             throw lexem;
         }
+        rpn.push(";");  // gen
         tid_tree.check_return(type_stack.back());
     }
 
-    void Body_statement(std::map<std::string, std::string>& params) {  // sem
+    void Body_statement(std::map<std::string, std::string>& params) {
         for (const auto& elem : params) {
             tid_tree.push_var(elem.first, elem.second);
         }
-        if (lexem.name == "if" || lexem.name == "while" ||
-            lexem.name == "for" || lexem.name == "lopin" ||
-            lexem.name == "lopout" || lexem.name == "delete") {
+        if (lexem.name == "if" || lexem.name == "while" || lexem.name == "for" ||
+            lexem.name == "lopin" || lexem.name == "lopout" || lexem.name == "delete") {
             Complicated_operator();
         } else if (lexem.type == 8) {
             Var();
@@ -727,6 +703,7 @@ class Syntaxer {
                 if (lexem.name != ";") {
                     throw lexem;
                 }
+                rpn.push(";");  // gen
             }
         } else {
             Expr();
@@ -734,6 +711,7 @@ class Syntaxer {
             if (lexem.name != ";") {
                 throw lexem;
             }
+            rpn.push(";");  // gen
         }
     }
 
@@ -753,16 +731,17 @@ class Syntaxer {
         Other_logical_implication();
     }
 
-    void Other_assigment_expr() {  // sem
+    void Other_assigment_expr() {
         while (lexem.name == "=" || lexem.name == "+=" || lexem.name == "->=" ||
-               lexem.name == "-=" || lexem.name == "*=" ||
-               lexem.name == "**=" || lexem.name == "/=" ||
-               lexem.name == "^=" || lexem.name == "&=" || lexem.name == "|=" ||
-               lexem.name == "%=") {
+               lexem.name == "-=" || lexem.name == "*=" || lexem.name == "**=" ||
+               lexem.name == "/=" || lexem.name == "^=" || lexem.name == "&=" ||
+               lexem.name == "|=" || lexem.name == "%=") {
             type_stack.push(lexem.name);  // sem
+            string name = lexem.name;     // gen
             get();
             Assigment_expr();
             type_stack.check_assignment();  // sem
+            rpn.push(name);                 // gen
             get();
         }
         --lexer->lexem_ind;
@@ -772,10 +751,12 @@ class Syntaxer {
         if (lexem.name != "break" && lexem.name != "continue") {
             throw lexem;
         }
+        rpn.push(lexem.name);  // gen
         get();
         if (lexem.name != ";") {
             throw lexem;
         }
+        rpn.push(";");  // gen
     }
 
     void Logical_or() {
@@ -784,12 +765,14 @@ class Syntaxer {
         Other_logical_or();
     }
 
-    void Other_logical_implication() {  // sem
+    void Other_logical_implication() {
         while (lexem.name == "->") {
+            string name = lexem.name;  // gen
+            type_stack.push("->");     // sem
             get();
-            type_stack.push("->");  // sem
             Logical_or();
             type_stack.check_bin();  // sem
+            rpn.push(name);          // gen
             get();
         }
         --lexer->lexem_ind;
@@ -801,12 +784,14 @@ class Syntaxer {
         Other_logical_and();
     }
 
-    void Other_logical_or() {  // sem
+    void Other_logical_or() {
         while (lexem.name == "||") {
-            type_stack.push("||");  // sem
+            type_stack.push("||");     // sem
+            string name = lexem.name;  // gen
             get();
             Logical_and();
             type_stack.check_bin();  // sem
+            rpn.push(name);          // gen
             get();
         }
         --lexer->lexem_ind;
@@ -818,12 +803,14 @@ class Syntaxer {
         Other_bitwise_or();
     }
 
-    void Other_logical_and() {  // sem
+    void Other_logical_and() {
         while (lexem.name == "&&") {
-            type_stack.push("&&");  // sem
+            type_stack.push("&&");     // sem
+            string name = lexem.name;  // gen
             get();
             Bitwise_or();
             type_stack.check_bin();  // sem
+            rpn.push(name);          // gen
             get();
         }
         --lexer->lexem_ind;
@@ -835,12 +822,14 @@ class Syntaxer {
         Other_bitwise_xor();
     }
 
-    void Other_bitwise_or() {  // sem
+    void Other_bitwise_or() {
         while (lexem.name == "|") {
-            type_stack.push("|");  // sem
+            type_stack.push("|");      // sem
+            string name = lexem.name;  // gen
             get();
             Bitwise_xor();
             type_stack.check_bin();  // sem
+            rpn.push(name);          // gen
             get();
         }
         --lexer->lexem_ind;
@@ -852,11 +841,13 @@ class Syntaxer {
         Other_bitwise_and();
     }
 
-    void Other_bitwise_xor() {  // sem
+    void Other_bitwise_xor() {
         while (lexem.name == "^") {
-            type_stack.push("^");  // sem
+            type_stack.push("^");      // sem
+            string name = lexem.name;  // gen
             get();
             Bitwise_and();
+            rpn.push(name);          // gen
             type_stack.check_bin();  // sem
             get();
         }
@@ -869,12 +860,14 @@ class Syntaxer {
         Other_comparison_equality();
     }
 
-    void Other_bitwise_and() {  // sem
+    void Other_bitwise_and() {
         while (lexem.name == "&") {
-            type_stack.push("&");  // sem
+            type_stack.push("&");      // sem
+            string name = lexem.name;  // gen
             get();
             Comparison_equality();
             type_stack.check_bin();  // sem
+            rpn.push(name);          // gen
             get();
         }
         --lexer->lexem_ind;
@@ -886,11 +879,13 @@ class Syntaxer {
         Other_comparison_comparison();
     }
 
-    void Other_comparison_equality() {  // sem
+    void Other_comparison_equality() {
         while (lexem.name == "==" || lexem.name == "!=") {
             type_stack.push(lexem.name);  // sem
+            string name = lexem.name;     // gen
             get();
             Comparison_comparison();
+            rpn.push(name);          // gen
             type_stack.check_bin();  // sem
             get();
         }
@@ -903,14 +898,14 @@ class Syntaxer {
         Other_sumsub();
     }
 
-    void Other_comparison_comparison() {  // sem
-        while ((lexem.name == ">" || lexem.name == ">=" || lexem.name == "<" ||
-                lexem.name == "<=") &&
-               flag_compar) {
+    void Other_comparison_comparison() {
+        while (lexem.name == ">" || lexem.name == ">=" || lexem.name == "<" || lexem.name == "<=") {
+            string name = lexem.name;     // gen
             type_stack.push(lexem.name);  // sem
             get();
             Sumsub();
             type_stack.check_bin();  // sem
+            rpn.push(name);          // gen
             get();
         }
         --lexer->lexem_ind;
@@ -922,12 +917,14 @@ class Syntaxer {
         Other_muldiv();
     }
 
-    void Other_sumsub() {  // sem
+    void Other_sumsub() {
         while (lexem.name == "+" || lexem.name == "-") {
+            string name = lexem.name;     // gen
             type_stack.push(lexem.name);  // sem
             get();
             Muldiv();
             type_stack.check_bin();  // sem
+            rpn.push(name);          // gen
             get();
         }
         --lexer->lexem_ind;
@@ -939,47 +936,48 @@ class Syntaxer {
         Other_power();
     }
 
-    void Other_muldiv() {  // sem
+    void Other_muldiv() {
         while (lexem.name == "/" || lexem.name == "*" || lexem.name == "%") {
+            string name = lexem.name;     // gen
             type_stack.push(lexem.name);  // sem
             get();
             Power();
+            rpn.push(name);          // gen
             type_stack.check_bin();  // sem
             get();
         }
         --lexer->lexem_ind;
     }
 
-    void Unary() {  // sem
-        long long cnt = 0;
-        while (lexem.name == "++" || lexem.name == "--" || lexem.name == "+" ||
-               lexem.name == "-" || lexem.name == "!" || lexem.name == "~") {
-            ++cnt;
-            type_stack.push(lexem.name);  // check after //sem
+    void Unary() {
+        std::vector<std::string> arr;  // gen sem
+        while (lexem.name == "++" || lexem.name == "--" || lexem.name == "+" || lexem.name == "-" ||
+               lexem.name == "!" || lexem.name == "~") {
+            type_stack.push(lexem.name);  // sem
+            arr.push_back(lexem.name);    // gen
             get();
         }
-        Call_expr();
-        while (cnt--) type_stack.check_uno();  // sem
+        Gensec();
+        for (const auto& str : arr) {
+            type_stack.check_uno();  // sem
+            rpn.push(str);           // gen
+        }
     }
 
-    void Other_power() {  // sem
+    void Other_power() {
         while (lexem.name == "**") {
-            type_stack.push("**");  // sem
+            std::string name = lexem.name;  // gen
+            type_stack.push("**");          // sem
             get();
             Power();
             type_stack.check_bin();  // sem
+            rpn.push(name);          // gen
             get();
         }
         --lexer->lexem_ind;
     }
 
-    void Call_expr() {
-        Gensec();
-        get();
-        Other_call_expr();
-    }
-
-    void Gensec() {  // sem
+    void Gensec() {
         if (lexem.name == "(") {
             get();
             Expr();
@@ -989,11 +987,10 @@ class Syntaxer {
             }
         } else if (lexem.type == 3 || lexem.type == 4) {
             type_stack.push("byte8");  // sem
+            rpn.push(lexem.name);      // gen
         } else if (lexem.type == 5) {
             type_stack.push("string");  // sem
-        } else if (lexem.name == "{") {
-            type_stack.push("array");  // sem
-            Init_list();
+            rpn.push(lexem.name);       // gen
         } else if (lexem.type == 2) {
             std::string name;  // sem
             Call_name(name);
@@ -1007,15 +1004,13 @@ class Syntaxer {
                     if (lexem.name != ")") {
                         throw lexem;
                     }
+                    rpn.push(name);    // gen
+                    rpn.push("call");  // gen
                 }
                 type_stack.push(tid_tree.get_func_type(name, types));
-            } else if (lexem.name == ".") {
-                std::string fields;
-                Call_field(fields);
-                type_stack.push(
-                    tid_tree.get_var_type(name, fields));  // sem //fields
             } else {
                 type_stack.push(tid_tree.get_var_type(name));  // sem
+                rpn.push(name);                                // gen
                 --lexer->lexem_ind;
             }
         } else {
@@ -1023,74 +1018,9 @@ class Syntaxer {
         }
     }
 
-    void Other_call_expr() {  // sem
-        if (lexem.name == "[") {
-            type_stack.eq_array();
-            get();
-            Expr();
-            type_stack.eq_bool();  // sem
-            get();
-            if (lexem.name != "]") {
-                throw lexem;
-            }
-        }
-        --lexer->lexem_ind;
-    }
-
-    void Init_list() {  // TODO check to array type
-        if (lexem.name != "{") {
-            throw lexem;
-        }
-        get();
-        Init_list_content();
-        get();
-        if (lexem.name != "}") {
-            throw lexem;
-        }
-    }
-
-    void Init_list_content() {
-        Assigment_expr();
-        type_stack.pop_back();
-        get();
-        Other_init_list_content();
-    }
-
-    void Other_init_list_content() {
-        while (lexem.name == ",") {
-            get();
-            Assigment_expr();
-            type_stack.pop_back();
-            get();
-        }
-        --lexer->lexem_ind;
-    }
-
     std::string Type() {
         std::string type = lexem.name;
-        if (lexem.name == "array" || lexem.name == "const_array") {
-            get();
-            if (lexem.name != "<") {
-                throw lexem;
-            }
-            get();
-            if (lexem.name == "array" || lexem.name == "const_array") {
-                throw lexem;
-            }
-            Type();
-            get();
-            if (lexem.name != ",") {
-                throw lexem;
-            }
-            get();
-            flag_compar = false;
-            Expr();
-            flag_compar = true;
-            get();
-            if (lexem.name != ">") {
-                throw lexem;
-            }
-        } else if (lexem.type != 8 && lexem.type != 2) {
+        if (lexem.type != 8) {
             throw lexem;
         }
         return type;
@@ -1099,11 +1029,12 @@ class Syntaxer {
     Lexem lexem;
 
    private:
+    vector<string> scope;
     Lexer* lexer;
-    bool flag_compar = true;
 
     Lexem get() { return lexem = lexer->gc(); }
 
     TIDTree tid_tree;
     TypeOpStack type_stack;
+    GlobalRPN rpn;
 };

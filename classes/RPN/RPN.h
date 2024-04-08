@@ -15,6 +15,8 @@ using std::stack;
 using std::string;
 using std::vector;
 
+using func_parameters = vector<pair<string, string>>;
+
 enum rpn_elem_type { _operation, _operand, _command, _address };
 // _command: { !, F!, T!, }
 
@@ -39,7 +41,7 @@ class RPN {
 
    public:
     // push lex
-    void push(const string& s) noexcept;
+    void push(const string& s);
     // blank
     void blank(const string& type = "!", const string& name = "");
 
@@ -52,7 +54,7 @@ class RPN {
 
 struct func_table_elem {
     string _return_type;
-    vector<string> _params;
+    func_parameters _params;
     int _rpn_id;
 };
 
@@ -71,7 +73,7 @@ class GlobalRPN {
     GlobalRPN();
 
     // push lexem
-    void push(const string& s) noexcept { _all_data[_current_rpn_id].push(s); }
+    void push(const string& s) { _all_data[_current_rpn_id].push(s); }
     // push and memorize scope
     void push_scope(const string& path);
     // blank
@@ -80,13 +82,13 @@ class GlobalRPN {
     void jump_blank(const string& name, const string& type = "!");
 
     // create new rpn for func
-    void push_func(const string& name, const string& return_type, const vector<string>& params);
+    void push_func(const string& name, const string& return_type, const func_parameters& params);
     // back to previous rpn
     void leave_func();
 
-    int size() const noexcept { return _all_data.size(); }
+    int size() const { return _all_data[_current_rpn_id].size(); }
 
-    RPN& operator[](int id);
+    rpn_elem& operator[](int id);
 
     void print_global_rpn() const;
 };

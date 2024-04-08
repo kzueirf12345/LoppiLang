@@ -1,12 +1,17 @@
 #include "RPN.h"
 
-void RPN::push(const string& s) noexcept {
+void RPN::push(const string& s) {
     rpn_elem el;
     el._name = s;
-    if (utils::is_op(s))
-        el._type = rpn_elem_type::_operation;
-    else
+
+    try {
+        if (utils::is_op(s))
+            el._type = rpn_elem_type::_operation;
+        else
+            el._type = rpn_elem_type::_operand;
+    } catch (std::logic_error) {
         el._type = rpn_elem_type::_operand;
+    }
 
     _data.push_back(el);
 }
@@ -58,12 +63,18 @@ void GlobalRPN::jump_blank(const string& path, const string& type) {
 }
 
 void GlobalRPN::push_func(const string& name, const string& return_type,
-                          const vector<string>& params) {
+                          const func_parameters& params) {
     _rpn_ids.push(_current_rpn_id);
     _current_rpn_id = _all_data.size();
     _all_data.push_back(RPN());
 
     _func_table[name] = {return_type, params, _current_rpn_id};
+
+    for (auto& [f, s] : params) {
+        push(s);
+        push(f);
+        push(";");
+    }
 }
 
 void GlobalRPN::leave_func() {
@@ -71,9 +82,9 @@ void GlobalRPN::leave_func() {
     _rpn_ids.pop();
 }
 
-RPN& GlobalRPN::operator[](int id) {
+rpn_elem& GlobalRPN::operator[](int id) {
     try {
-        return _all_data[id];
+        return _all_data[_current_rpn_id][id];
     } catch (...) {
         throw std::logic_error("array index out of range");
     }

@@ -87,9 +87,9 @@ std::string TypeOpStack::check_bin() {
 std::string TypeOpStack::check_uno() {
     if ((int)_stack.size() < 2) throw std::logic_error("too few elements");
 
-    auto op = _stack.back();
-    _stack.pop_back();
     auto s = _stack.back();
+    _stack.pop_back();
+    auto op = _stack.back();
     _stack.pop_back();
 
     auto ans = check_uno(s, op);

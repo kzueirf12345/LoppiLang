@@ -1,55 +1,78 @@
 scope scope1
 {
-    type asdf
+    byte4 a = 123456;
+    # byte4 b = 7;
+    # # a ^= b + (a**b * 2)*a;
+    # lol(a, b);
+    jump scope3;
+    scope scope7
     {
-        byte4 a;
-        byte8 b = 345;
+        byte4 kek = scope1::a;
+        jump scope4;
     }
-    asdf temp;
-    type asdf2
-    {
-        asdf pup;
-    }
-    asdf2 norm;
-    norm.pup.a = 123432;
-    byte4 a;
+}
+scope scope2 {
+    string test = '1';
+    jump scope1::scope7;
+    lopout(test);
+}
 
-    function lol : byte (byte q, byte q2)
-    {
-        byte4 a = 5;
-        byte2 b = 3;
-        if ((a))
-            {
-                byte b = scope1::a -> a;
-                a = ((((b)+4)/2) - 16)**(1+a);
-            }
-            else
-            {
-                byte b = a;
-                q2 = 0;
-                string k = 'sjlfdgljs';
-
-                # q2 = b + k;
-                if(q2){}
-            }
-        return a + a / 2342314 * q;
-    }
-    lol(a, temp.a + 5);
-    #asdfasdf qg()ADf as g df agsd
-    a = 0; #asldkfnalsdf
-    byte8 b = a + a;
-    string str = 'sdgf325-gst5___';
-    for (byte flag = 1; byte4 i = 0;; i <= 16 -> 0+((4)) / 3; i+i)
-    {
-        scope1::b += 2;
-        byte b = 9;
-    }
-    a = 5;
-    delete scope1::a;
+scope scope3{
     jump scope2;
 }
-scope scope2
-{
-    byte4 b = scope1::b;
-    lopout((scope1::b + b), 'asdf', 526254);
+
+scope scope4 {
+    string t;
+    lopin(t);
+    lopout((1 + 3));
 }
+
+
+#scope scope1
+#{
+#    byte4 a;
+#    a = ~a;
+#
+#    function lol : byte (byte q, byte q2)
+#    {
+#        byte4 a = 5;
+#        byte2 b = 3;
+#        if ((a))
+#            {
+#                byte b = scope1::a -> a;
+#                a = ((((b)+4)/2) - 16)**(1+a);
+#            }
+#            else
+#            {
+#                byte b = a;
+#                q2 = 0;
+#                string k = 'sjlfdgljs';
+#
+#                # q2 = b + k;
+#                if(q2){}
+#            }
+#        return a + a / 2342314 * q;
+#    }
+#    lol(a, a + 5);
+#    #asdfasdf qg()ADf as g df agsd
+#    a = 0; #asldkfnalsdf
+#    byte8 b = a + a;
+#    string str = 'sdgf325-gst5___';
+#    for (byte flag = 1; byte4 i = 0;; i <= 16 -> 0+((4)) / 3; i+i)
+#    {
+#        for (byte4 a = 0;; a <1000; ++a)
+#        {
+#            byte8 b = 9;
+#        }
+#        scope1::b += 2;
+#        byte b = 9;
+#    }
+#    a = 5;
+#    delete scope1::a;
+#    jump scope2;
+#}
+#scope scope2
+#{
+#    byte4 b = scope1::b;
+#    lopout((scope1::b + b), 'asdf', 526254);
+#}
