@@ -28,7 +28,7 @@ int main() {
 
     std::string lexer_out_filename;
 #if DEBUG
-    lexer_out_filename = "Lexems.txt";
+    lexer_out_filename = "../Grammar/Lexems.txt";
 #else
     std::cout << "Введите имя файла, куда будут загружены лексемы\n";
     std::cin >> lexer_out_filename;
@@ -43,10 +43,12 @@ int main() {
     } catch (const Lexem& e) {
         std::cerr << "Syntax analyze error:\n"
                   << "Lexem " << e.name << " on " << e.line << " line" << std::endl;
+        return -1;
     } catch (const std::exception& e) {
         std::cerr << "Semantic analyze error:\n"
                   << e.what() << " on " << syntaxer.lexem.line << " line"
                   << std::endl;
+        return -1;
     }
 
     syntaxer.RPN().print_global_rpn();
