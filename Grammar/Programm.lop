@@ -1,72 +1,36 @@
-scope scope1
-{
-    # byte4 a = 123456;
-    # byte4 b = 7;
-    # # a ^= b + (a**b * 2)*a;
-    # lol(a, b);
-    # jump scope3;
-    # scope scope7
-    # {
-    #     byte4 kek = scope1::a;
-    #     jump scope4;
-    # }
-    while (5 < 10) {
-        byte4 a = 5;
-        a += 6;
-        lopin(a);
-    }
-}
+# scope scope1 {
+#     jump scope3;
+#     jump meow;
+# }
+# 
 # scope scope2 {
-#     string test = '1';
-#     lopout(test);
+#     lopout('test');
+#     jump scope4;
+# }
+# 
+# scope scope3 {
+#     byte8 a = 5;
+#     jump scope2;
+# }
+# 
+# scope scope4 {
+#     byte4 a = 7;
+#     byte4 b = 2 ** 3;
 # }
 
+scope meow {
+    lopout('meow');
+    function name : byte4 (byte4 a, byte4 b)
+    {
+        for (byte4 i = 0;byte8 a = 7;; i < 34; ++i) {
+            a = name(a/2, b);
+        }
+        return a + b;
+    }
+}
 
-#scope scope1
-#{
-#    byte4 a;
-#    a = ~a;
-#
-#    function lol : byte (byte q, byte q2)
-#    {
-#        byte4 a = 5;
-#        byte2 b = 3;
-#        if ((a))
-#            {
-#                byte b = scope1::a -> a;
-#                a = ((((b)+4)/2) - 16)**(1+a);
-#            }
-#            else
-#            {
-#                byte b = a;
-#                q2 = 0;
-#                string k = 'sjlfdgljs';
-#
-#                # q2 = b + k;
-#                if(q2){}
-#            }
-#        return a + a / 2342314 * q;
-#    }
-#    lol(a, a + 5);
-#    #asdfasdf qg()ADf as g df agsd
-#    a = 0; #asldkfnalsdf
-#    byte8 b = a + a;
-#    string str = 'sdgf325-gst5___';
-#    for (byte flag = 1; byte4 i = 0;; i <= 16 -> 0+((4)) / 3; i+i)
-#    {
-#        for (byte4 a = 0;; a <1000; ++a)
-#        {
-#            byte8 b = 9;
-#        }
-#        scope1::b += 2;
-#        byte b = 9;
-#    }
-#    a = 5;
-#    delete scope1::a;
-#    jump scope2;
-#}
-#scope scope2
-#{
-#    byte4 b = scope1::b;
-#    lopout((scope1::b + b), 'asdf', 526254);
-#}
+
+scope m {
+    # byte4 a = 3;
+    meow::name(4, 3*meow::name(3*meow::name(3, 4), 4));
+}

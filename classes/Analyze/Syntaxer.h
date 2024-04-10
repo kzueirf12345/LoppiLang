@@ -7,14 +7,26 @@
 
 using std::to_string;
 
+/**
+    @brief Класс для синтаксического анализа рекурсивным спуском
+    @throw SyntaxerError неправильный порядок лексем
+*/
 class Syntaxer {
    public:
+    /**
+        @brief Конструктор, инциализирующий приватные поля
+        @details @ref TIDTree "tid_tree", @ref TypeOpStack "type_stack", @ref GlobalRPN "rpn"
+        инциализируются соответсвующим конструктором по умолчанию
+    */
     Syntaxer(Lexer& lexer)
         : lexer(&lexer), tid_tree(TIDTree()), type_stack(TypeOpStack()), rpn(GlobalRPN()) {}
 
     [[nodiscard]] GlobalRPN& RPN() noexcept { return rpn; }
     [[nodiscard]] const GlobalRPN& RPN() const noexcept { return rpn; }
 
+    /**
+        @brief Функция, возвращающая scope, который мы в даннный момент обрабатываем
+    */
     string str_scope() const {
         string res;
         for (int i = 0; i < scope.size() - 1; ++i) {
@@ -24,6 +36,9 @@ class Syntaxer {
         return res;
     }
 
+    /**
+        @brief Точка входа в рекурсивный спуск
+    */
     void Programm() {
         lexer->PushLexem("Lol", true);
         get();
@@ -37,7 +52,9 @@ class Syntaxer {
         std::cerr << "Syntax analyze is OK" << std::endl;
         std::cerr << "Semantic analyze is OK" << std::endl;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Scope() {
         if (lexem.name != "scope") {
             throw lexem;
@@ -64,20 +81,26 @@ class Syntaxer {
         scope.pop_back();      // gen
         tid_tree.leave_tid();  // sem
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Subprogramm() {
         while (!lexem.is_eof) {
             Scope();
             get();
         }
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Statements() {
         Statement();
         get();
         Other_statements();
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Statement() {
         type_stack.clear();
         if (lexem.name == "function") {
@@ -114,7 +137,9 @@ class Syntaxer {
             rpn.push(";");  // gen
         }
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Other_statements() {
         while (lexem.name == "function" || lexem.name == "if" || lexem.name == "while" ||
                lexem.name == "for" || lexem.name == "lopin" || lexem.name == "lopout" ||
@@ -125,7 +150,9 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Function() {
         if (lexem.name != "function") {
             throw lexem;
@@ -167,7 +194,9 @@ class Syntaxer {
         tid_tree.leave_tid();  // sem
         rpn.leave_func();      // gen
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Complicated_operator() {
         if (lexem.name == "if") {
             If();
@@ -185,7 +214,9 @@ class Syntaxer {
             throw lexem;
         }
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     std::pair<std::string, std::string> Var() {
         std::string type = Type();  // sem
         get();
@@ -214,7 +245,9 @@ class Syntaxer {
         rpn.push(";");  // gen
         return {name, type};
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Jump() {
         if (lexem.name != "jump") {
             throw lexem;
@@ -230,7 +263,9 @@ class Syntaxer {
         rpn.push(";");             // gen
         tid_tree.push_jump(name);  // sem
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Var_enum(func_parameters& params) {
         std::string type = Type();  // sem
         get();
@@ -242,13 +277,17 @@ class Syntaxer {
         get();
         Other_var_enum(params);
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Func_statements() {
         Func_statement();
         get();
         Other_func_statements();
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void If() {
         if (lexem.name != "if") {
             throw lexem;
@@ -306,7 +345,9 @@ class Syntaxer {
 
         rpn[p2]._name = std::to_string(rpn.size());  // gen
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void While() {
         tid_tree.create_tid(NodeType::BODY);  // sem
 
@@ -349,7 +390,9 @@ class Syntaxer {
         rpn[p2]._name = to_string(adress1);     // gen
         rpn[p1]._name = to_string(rpn.size());  // gen
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void For() {
         tid_tree.create_tid(NodeType::BODY);  // sem
         if (lexem.name != "for") {
@@ -426,7 +469,9 @@ class Syntaxer {
         // get(); //TODO почему закоментили то блять
         tid_tree.leave_tid();  // sem
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Lopin() {
         if (lexem.name != "lopin") {
             throw lexem;
@@ -456,7 +501,9 @@ class Syntaxer {
         }
         rpn.push(";");  // gen
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Call_names(std::vector<std::string>& parametrs) {
         std::string name;
         Call_name(name);
@@ -464,7 +511,9 @@ class Syntaxer {
         get();
         Other_call_names(parametrs);
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Other_call_names(std::vector<std::string>& parametrs) {
         while (lexem.name == ",") {
             get();
@@ -475,7 +524,9 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Lopout() {
         if (lexem.name != "lopout") {
             throw lexem;
@@ -502,7 +553,9 @@ class Syntaxer {
 
         rpn.push(";");  // gen
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Delete() {
         if (lexem.name != "delete") {
             throw lexem;
@@ -522,7 +575,9 @@ class Syntaxer {
 
         rpn.push(";");  // gen
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Call_func() {
         std::string name;  // sem
         Call_name(name);
@@ -541,13 +596,17 @@ class Syntaxer {
         }
         tid_tree.get_func_type(name, types);
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Expr() {
         Assigment_expr();
         get();
         Other_expr();
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Call_name(std::string& name) {
         if (lexem.type != 2) {
             throw lexem;
@@ -556,7 +615,9 @@ class Syntaxer {
         get();
         Other_call_name(name);
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Other_var_enum(func_parameters& params) {
         while (lexem.name == ",") {
             get();
@@ -565,7 +626,9 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Func_statement() {
         if (lexem.name == "if" || lexem.name == "while" || lexem.name == "for" ||
             lexem.name == "lopin" || lexem.name == "lopout" || lexem.name == "delete") {
@@ -597,7 +660,9 @@ class Syntaxer {
             rpn.push(";");  // gen
         }
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Other_func_statements() {
         while (lexem.name == "if" || lexem.name == "while" || lexem.name == "for" ||
                lexem.name == "lopin" || lexem.name == "lopout" || lexem.name == "delete" ||
@@ -609,7 +674,9 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Body_statements(std::map<std::string, std::string> params = {}) {
         while (lexem.name == "if" || lexem.name == "while" || lexem.name == "for" ||
                lexem.name == "lopin" || lexem.name == "lopout" || lexem.name == "delete" ||
@@ -622,20 +689,26 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Exprs(std::vector<std::string>& types) {
         Assigment_expr();
         types.push_back(type_stack.back());
         get();
         Other_exprs(types);
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Assigment_expr() {
         Logical_implication();
         get();
         Other_assigment_expr();
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Other_expr() {
         while (lexem.name == ",") {
             type_stack.push(",");      // sem
@@ -648,7 +721,9 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Other_call_name(std::string& name) {
         while (lexem.name == "::") {
             get();
@@ -660,7 +735,9 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Return() {
         if (lexem.name != "return") {
             throw lexem;
@@ -670,6 +747,7 @@ class Syntaxer {
             lexem.name == "{") {
             Expr();
             get();
+            tid_tree.check_return(type_stack.back());
         }
 
         rpn.push("ret");  // gen
@@ -678,9 +756,10 @@ class Syntaxer {
             throw lexem;
         }
         rpn.push(";");  // gen
-        tid_tree.check_return(type_stack.back());
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Body_statement(std::map<std::string, std::string>& params) {
         for (const auto& elem : params) {
             tid_tree.push_var(elem.first, elem.second);
@@ -717,7 +796,9 @@ class Syntaxer {
             rpn.push(";");  // gen
         }
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Other_exprs(std::vector<std::string>& types) {
         while (lexem.name == ",") {
             get();
@@ -727,13 +808,17 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Logical_implication() {
         Logical_or();
         get();
         Other_logical_implication();
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Other_assigment_expr() {
         while (lexem.name == "=" || lexem.name == "+=" || lexem.name == "->=" ||
                lexem.name == "-=" || lexem.name == "*=" || lexem.name == "**=" ||
@@ -750,7 +835,9 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Jump_operator() {
         if (lexem.name != "break" && lexem.name != "continue") {
             throw lexem;
@@ -762,13 +849,17 @@ class Syntaxer {
         }
         rpn.push(";");  // gen
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Logical_or() {
         Logical_and();
         get();
         Other_logical_or();
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Other_logical_implication() {
         while (lexem.name == "->") {
             string name = lexem.name;  // gen
@@ -781,13 +872,17 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Logical_and() {
         Bitwise_or();
         get();
         Other_logical_and();
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Other_logical_or() {
         while (lexem.name == "||") {
             type_stack.push("||");     // sem
@@ -800,13 +895,17 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Bitwise_or() {
         Bitwise_xor();
         get();
         Other_bitwise_or();
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Other_logical_and() {
         while (lexem.name == "&&") {
             type_stack.push("&&");     // sem
@@ -819,13 +918,17 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Bitwise_xor() {
         Bitwise_and();
         get();
         Other_bitwise_xor();
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Other_bitwise_or() {
         while (lexem.name == "|") {
             type_stack.push("|");      // sem
@@ -838,13 +941,17 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Bitwise_and() {
         Comparison_equality();
         get();
         Other_bitwise_and();
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Other_bitwise_xor() {
         while (lexem.name == "^") {
             type_stack.push("^");      // sem
@@ -857,13 +964,17 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Comparison_equality() {
         Comparison_comparison();
         get();
         Other_comparison_equality();
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Other_bitwise_and() {
         while (lexem.name == "&") {
             type_stack.push("&");      // sem
@@ -876,13 +987,17 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Comparison_comparison() {
         Sumsub();
         get();
         Other_comparison_comparison();
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Other_comparison_equality() {
         while (lexem.name == "==" || lexem.name == "!=") {
             type_stack.push(lexem.name);  // sem
@@ -895,13 +1010,17 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Sumsub() {
         Muldiv();
         get();
         Other_sumsub();
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Other_comparison_comparison() {
         while (lexem.name == ">" || lexem.name == ">=" || lexem.name == "<" || lexem.name == "<=") {
             string name = lexem.name;     // gen
@@ -914,13 +1033,17 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Muldiv() {
         Power();
         get();
         Other_muldiv();
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Other_sumsub() {
         while (lexem.name == "+" || lexem.name == "-") {
             string name = lexem.name;     // gen
@@ -933,13 +1056,17 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Power() {
         Unary();
         get();
         Other_power();
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Other_muldiv() {
         while (lexem.name == "/" || lexem.name == "*" || lexem.name == "%") {
             string name = lexem.name;     // gen
@@ -952,7 +1079,9 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Unary() {
         std::vector<std::string> arr;  // gen sem
         while (lexem.name == "++" || lexem.name == "--" || lexem.name == "+" || lexem.name == "-" ||
@@ -967,7 +1096,9 @@ class Syntaxer {
             rpn.push(str);           // gen
         }
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Other_power() {
         while (lexem.name == "**") {
             std::string name = lexem.name;  // gen
@@ -980,7 +1111,9 @@ class Syntaxer {
         }
         --lexer->lexem_ind;
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     void Gensec() {
         if (lexem.name == "(") {
             get();
@@ -990,7 +1123,7 @@ class Syntaxer {
                 throw lexem;
             }
         } else if (lexem.type == 3 || lexem.type == 4) {
-            type_stack.push("byte8");  // sem
+            type_stack.push("byte4");  // sem
             rpn.push(lexem.name);      // gen
         } else if (lexem.type == 5) {
             type_stack.push("string");  // sem
@@ -1002,6 +1135,7 @@ class Syntaxer {
             if (lexem.name == "(") {
                 get();
                 std::vector<std::string> types;  // sem
+                auto prev_sz = type_stack.size();
                 if (lexem.name != ")") {
                     Exprs(types);
                     get();
@@ -1010,6 +1144,9 @@ class Syntaxer {
                     }
                     rpn.push(name);    // gen
                     rpn.push("call");  // gen
+                }
+                while (type_stack.size() > prev_sz) {
+                    type_stack.pop_back();
                 }
                 type_stack.push(tid_tree.get_func_type(name, types));
             } else {
@@ -1021,7 +1158,9 @@ class Syntaxer {
             throw lexem;
         }
     }
-
+    /**
+        @brief Функция рекурсивного спуска 
+    */
     std::string Type() {
         std::string type = lexem.name;
         if (lexem.type != 8) {
@@ -1030,17 +1169,25 @@ class Syntaxer {
         return type;
     }
 
+    /// Текущая лексема
     Lexem lexem;
 
    private:
+    /// Символ, который обозначает использование адреса в нотации Бэкуса-Наура
     const string address_marker = "$";
 
+    /// Стэк scope'ов, где мы сейчас находимся
     vector<string> scope;
+    /// Указатель на лексер
     Lexer* lexer;
 
+    /// Функция, переходящая к следующей лексеме
     Lexem get() { return lexem = lexer->gc(); }
 
+    /// Дерево TID'ов для проверки семантики
     TIDTree tid_tree;
+    /// Стэк типов и операций, для проверки на соответствие типов
     TypeOpStack type_stack;
+    /// Объект класса для записи нотации Бэкуса-Наура
     GlobalRPN rpn;
 };
