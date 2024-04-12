@@ -200,7 +200,7 @@ void TIDTree::create_tid(NodeType type, std::string name) {
         throw std::logic_error("in BODY you can create only BODY");
     }
     if (_current_node->_type == NodeType::TYPE) {
-        throw std::logic_error("ypu can't create spaces in TYPE");
+        throw std::logic_error("you can't create spaces in TYPE");
     }
     if (_current_node->_type == NodeType::FUNC && type != NodeType::BODY) {
         throw std::logic_error("in FUNC you can create only BODY");

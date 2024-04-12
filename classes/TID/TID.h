@@ -10,13 +10,19 @@
 
 using func_parameters = std::vector<std::pair<std::string, std::string>>;
 
+/**
+ * @brief TID для переменных
+*/
 struct VarTID {
    private:
     // name, type
+    /// @brief список переменных имя, тип
     std::map<std::string, std::string> _variables;
 
    public:
+    /// @brief Функция вставки переменной
     void insert(std::string name, std::string type);
+    /// @brief Функция удаления переменной
     void erase(std::string name);
 
     std::string get_type(std::string name) const;
@@ -24,12 +30,17 @@ struct VarTID {
     std::map<std::string, std::string> get_vars() const { return _variables; }
 };
 
+/**
+ * @brief TID для функций
+ */
 struct FuncTID {
    private:
     // name, return_type, params
+    /// @brief Cписок функций имя, pair<возвращаемое значение, список параметров>
     std::map<std::string, std::pair<std::string, func_parameters>> _functions;
 
    public:
+    /// @brief Функция вставки функции
     void insert(std::string name, std::string return_type, func_parameters params);
 
     std::string get_return_type(std::string name) const;
@@ -42,6 +53,9 @@ struct FuncTID {
     }
 };
 
+/**
+ * @brief TID для типов
+ */
 struct TypeTID {
    private:
     // name, fields
@@ -55,6 +69,9 @@ struct TypeTID {
     std::map<std::string, std::map<std::string, std::string>> get_types() const { return _types; }
 };
 
+/**
+ * @brief Общий ешв
+*/
 class TID {
    private:
     VarTID _vars;
